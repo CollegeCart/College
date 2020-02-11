@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backk"
+    android:orientation="vertical"
+    tools:context=".Main2Activity">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="60dp"
+        android:onClick="bebTech"
+        android:layout_marginTop="180dp"
+        android:textSize="15sp"
+        android:layout_marginLeft="90dp"
+        android:background="@drawable/button_back"
+        android:paddingLeft="60dp"
+        android:text="BE/BTECH"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    android:text="GMAT"
+        android:background="@drawable/button_back"
+        android:textSize="15sp"
+        android:paddingRight="70dp"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="40dp"
+
+        android:paddingLeft="80dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    android:textSize="15sp"
+        android:text="GRE"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_back"
+        android:paddingLeft="90dp"
+        android:paddingRight="80dp"
+        android:layout_marginLeft="90dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GATE"
+        android:background="@drawable/button_back"
+        android:paddingRight="80dp"
+        android:paddingLeft="80dp"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="40dp"
+        />
+
+</LinearLayout>
