@@ -1,22 +1,395 @@
 package com.example.collegecart;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Main2Activity extends AppCompatActivity {
+
+
+
+    Spinner buyspinnercategories;
+    ProgressDialog BuyprogressDialog;
+    FirebaseFirestore database;
+    FirebaseAuth auth;
+    ArrayAdapter subjectAdapter , branchAdapter , yearAdapter;
+    Spinner BuybranchSpinner , BuyyearSpinner , BuySubjectSpinner , BuygreSpinner;
+    List<String> BuybranchList , BuysubjectList;
+
+    String[]  BuyCategories = {"Select Categories" ,"GMAT" , "Btech" , "GRE" , "Gate" };
+    String[]  BuyYearList = {"Second Year" , "Third Year" , "Fourth Year"};
+    CircleImageView imageView;
+     String category;
+     String BuyBranch;
+     String Subject;
+     String BuyYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+
+
+
+
+
+
+        BuybranchSpinner = findViewById(R.id.BUYbranchspin);
+        BuygreSpinner = findViewById(R.id.BuygreSpinner);
+        BuySubjectSpinner = findViewById(R.id.Buysubjectspin);
+        database = FirebaseFirestore.getInstance();
+        buyspinnercategories  = findViewById(R.id.Buycategories);
+        BuyyearSpinner = findViewById(R.id.Buyyearspin);;
+
+
+        BuybranchList = new ArrayList<>();
+        BuysubjectList = new ArrayList<>();
+        BuyprogressDialog = new ProgressDialog(this);
+        BuyprogressDialog.setMessage("Loading.......");
+        BuyprogressDialog.show();
+
+
+
+
+        BuybranchSpinner.setVisibility(View.GONE);
+        BuyyearSpinner.setVisibility(View.GONE);
+        BuySubjectSpinner.setVisibility(View.GONE);
+
+
+        database.collection("Btech").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful())
+                {
+                    for (QueryDocumentSnapshot snapshot : task.getResult())
+                    {
+                        BuybranchList.add(snapshot.getId());
+                    }
+                }
+
+
+
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        branchAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,BuybranchList);
+                        branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        BuybranchSpinner.setAdapter(branchAdapter);
+
+                    
+
+                    }
+                },1000);
+
+            }
+        });
+
+
+
+
+
+
+        //*******************************YEAR SPINNER*************************************************
+
+
+        yearAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,BuyYearList );
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        BuyyearSpinner.setAdapter(yearAdapter);
+
+
+
+        //*********************************************************************************************
+
+//**********************************************BranchSpinner***********************************************
+
+
+        BuyYear = "Second Year";
+        BuyBranch = "CS";
+
+        BuybranchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                BuyBranch = parent.getItemAtPosition(position).toString();
+
+                gotoAdapter();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
+
+        //****************************YEAR SPINNER********************************************************
+
+        BuyyearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                BuyYear = parent.getItemAtPosition(position).toString();
+                gotoAdapter();
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                BuyprogressDialog.dismiss();
+                buyspinnercategories.setVisibility(View.VISIBLE);
+
+            }
+        },2000);
+
+
+
+//------------------------------------CATEGORIES SELECTION--------------------------------------------------------
+
+
+
+
+        ArrayAdapter adapter = new ArrayAdapter(this ,  android.R.layout.simple_spinner_item ,BuyCategories );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        buyspinnercategories.setAdapter(adapter);
+
+        buyspinnercategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                category = parent.getItemAtPosition(position).toString();
+
+                switch (category)
+                {
+                    case "Btech":
+                    {
+                        BuygreSpinner.setVisibility(View.GONE);
+                        BuybranchSpinner.setVisibility(View.VISIBLE);
+                        BuyyearSpinner.setVisibility(View.VISIBLE);
+                        BuySubjectSpinner.setVisibility(View.VISIBLE);
+
+
+                    }
+                    break;
+                    case "GMAT":
+                    {
+
+
+
+                        BuygreSpinner.setVisibility(View.GONE);
+                        BuybranchSpinner.setVisibility(View.GONE);
+                        BuyyearSpinner.setVisibility(View.GONE);
+                        BuySubjectSpinner.setVisibility(View.GONE);
+
+
+
+                    }
+                    break;
+
+                    case "GRE" :
+                    {
+
+                        BuygreSpinner.setVisibility(View.VISIBLE);
+                        BuybranchSpinner.setVisibility(View.GONE);
+                        BuyyearSpinner.setVisibility(View.GONE);
+                        BuySubjectSpinner.setVisibility(View.GONE);
+
+
+                    }
+                    break;
+                    case "Gate" :
+                    {
+
+                        BuygreSpinner.setVisibility(View.GONE);
+                        BuybranchSpinner.setVisibility(View.VISIBLE);
+                        BuyyearSpinner.setVisibility(View.GONE);
+                        BuySubjectSpinner.setVisibility(View.GONE);
+
+
+
+                    }
+                    break;
+
+                }
+
+
+                category = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
+
+        BuySubjectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Subject = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
-    public void bebTech(View view) {
+    private void gotoAdapter() {
 
-        Intent intent =new Intent(this , beBtech.class);
+
+
+
+
+
+        database.collection("Btech").document(BuyBranch).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                if (task.isSuccessful())
+                {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists())
+                    {
+                        BuysubjectList= (ArrayList<String>)document.get(BuyYear);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,BuysubjectList);
+                                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                BuySubjectSpinner.setAdapter(subjectAdapter);
+
+
+
+                            }
+                        },300);
+
+
+                    }
+                }
+
+
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+    }
+
+
+    public void productlist(View view) {
+
+        Intent intent = new Intent(this , searchResults.class);
+        intent.putExtra("Subject" , Subject);
         startActivity(intent);
+        finish();
+
+
     }
 }

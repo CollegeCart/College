@@ -2,25 +2,56 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.collegecart">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".otpcode"></activity>
+        <activity android:name=".savedProducts"></activity>
+        <activity android:name=".contacts" />
+        <activity android:name=".ProductsDetails" />
+        <activity android:name=".searchResults" />
+        <activity android:name=".myProducts" />
         <activity
-            android:name=".beBtech"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".firestoreRycycler"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Main3Activity"
+            android:label="@string/profile" />
+        <activity
+            android:name=".sell"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".profile" />
+        <activity android:name=".otpcode" />
         <activity
             android:name=".Main2Activity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
