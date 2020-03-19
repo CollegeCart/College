@@ -106,6 +106,7 @@
         android:layout_marginTop="92dp"
         android:text="Seller Name"
 
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,6 +121,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="8dp"
+        android:textStyle="bold"
 
         android:text="Seller Contact"
         android:textColor="@color/black"

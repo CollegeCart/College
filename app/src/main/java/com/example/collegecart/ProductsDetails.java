@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProductsDetails extends AppCompatActivity {
@@ -87,6 +89,13 @@ public class ProductsDetails extends AppCompatActivity {
         button.setVisibility(View.GONE);
 
 
+        firestore.collection("Users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                sellerCOntact.setText( "Seller Conatct : " + documentSnapshot.get("Contact").toString());
+            }
+        });
 
 
         if (user == null)
@@ -110,6 +119,7 @@ public class ProductsDetails extends AppCompatActivity {
 
 
 
+        sellerName.setText("Seller Name : " + user.getDisplayName());
 
 
 

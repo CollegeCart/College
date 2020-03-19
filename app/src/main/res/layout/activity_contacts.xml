@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="4dp"
+
         android:text="Mobile Number :"
         android:textColor="@color/black"
         android:textSize="17sp"
@@ -29,6 +30,28 @@
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="parent"
+
+
+
+        />
+
+
+    <TextView
+        android:id="@+id/numbertext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+
+        android:background="@drawable/edit_back"
+        android:padding="10dp"
+        android:text="sdasdasdas"
+        android:textSize="17sp"
+
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,6 +81,25 @@
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:id="@+id/emailText"
+
+        android:background="@drawable/edit_back"
+        android:padding="10dp"
+        android:textColor="@color/black"
+
+        android:textSize="17sp"
+
+        android:text="Emaiil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/numbertext" />
+
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
@@ -68,7 +110,7 @@
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.215"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
@@ -86,6 +128,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/emailradio"
             android:text="Email"
             android:textAlignment="center"
 
@@ -94,6 +137,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/mobileradio"
             android:text="Mobile NUmber"
             android:textColor="@color/black" />
 
