@@ -7,10 +7,12 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -37,6 +39,12 @@ public class Main2Activity extends AppCompatActivity {
     ProgressDialog BuyprogressDialog;
     FirebaseFirestore database;
     FirebaseAuth auth;
+    private TextView title;
+    ImageView sharebutton;
+    ImageView searchProducts;
+    CircleImageView profilepic;
+
+    TextView additem;
     ArrayAdapter subjectAdapter , branchAdapter , yearAdapter;
     Spinner BuybranchSpinner , BuyyearSpinner , BuySubjectSpinner , BuygreSpinner;
     List<String> BuybranchList , BuysubjectList;
@@ -46,6 +54,8 @@ public class Main2Activity extends AppCompatActivity {
     CircleImageView imageView;
      String category;
      String BuyBranch;
+    private ImageView favorites;
+    private ImageView deleteProducts;
      String Subject;
      String BuyYear;
 
@@ -60,6 +70,28 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.toolbaaar);
+
+        View view = getSupportActionBar().getCustomView();
+        title = view.findViewById(R.id.ti);
+        title.setText("Search Product");
+
+        deleteProducts = view.findViewById(R.id.deleteProducts);
+        deleteProducts.setVisibility(View.GONE);
+
+        favorites = view.findViewById(R.id.SaveTofavorites);
+        favorites.setVisibility(View.GONE);
+        profilepic = view.findViewById(R.id.imageToolbar);
+        profilepic.setVisibility(View.GONE);
+
+        additem = findViewById(R.id.addItemToolbar);
+        additem.setVisibility(View.GONE);
+        searchProducts = findViewById(R.id.searchProducts);
+        searchProducts.setVisibility(View.GONE);
+        sharebutton = view.findViewById(R.id.shareButton);
+        sharebutton.setVisibility(View.GONE);
 
 
 
@@ -386,7 +418,9 @@ public class Main2Activity extends AppCompatActivity {
     public void productlist(View view) {
 
         Intent intent = new Intent(this , searchResults.class);
+        intent.putExtra("category" , category);
         intent.putExtra("Subject" , Subject);
+        intent.putExtra("branch" , BuyBranch);
         startActivity(intent);
         finish();
 

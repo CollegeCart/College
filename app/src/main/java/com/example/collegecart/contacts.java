@@ -28,12 +28,11 @@ public class contacts extends AppCompatActivity {
 
 
 
-    EditText mobileNumber;
-    EditText Email;
+
     FirebaseFirestore database;
     FirebaseUser user;
     RadioButton mobile , eemail;
-    TextView emailText , numberText;
+    EditText emailText , numberText;
     FirebaseFirestore getDatabase;
     RadioGroup radioGroup;
 
@@ -77,31 +76,12 @@ public class contacts extends AppCompatActivity {
         searchItems.setVisibility(View.GONE);
 
 
-        mobileNumber =findViewById(R.id.editText2);
-        Email = findViewById(R.id.editText3);
-        mobileNumber.setVisibility(View.GONE);
-        Email.setVisibility(View.GONE);
 
 
 
 
-        numberText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mobileNumber.setVisibility(View.VISIBLE);
 
 
-            }
-        });
-
-
-        emailText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Email.setVisibility(View.VISIBLE);
-            }
-        });
 
 
 
@@ -156,29 +136,29 @@ public class contacts extends AppCompatActivity {
                 if (eemail.getId() == a)
                 {
 
-                    contact.put("Contact" , emailText.getText().toString());
+                    getDatabase.collection("Users").document(user.getUid()).update("Contact" , emailText.getText().toString());
+
 
                 }
                 if (mobile.getId() == a)
                 {
 
-                    contact.put("Contact", numberText.getText().toString());
+                    getDatabase.collection("Users").document(user.getUid()).update("Contact" , numberText.getText().toString());
 
                 }
 
 
 
 
-                getDatabase.collection("Users").document(user.getUid()).set(contact);
 
-                getDatabase.collection("Users").document(user.getUid()).update("Number" , mobileNumber.getText().toString());
+                getDatabase.collection("Users").document(user.getUid()).update("Number" , numberText.getText().toString());
 
-                getDatabase.collection("Users").document(user.getUid()).update("Email" , Email.getText().toString());
-
+                getDatabase.collection("Users").document(user.getUid()).update("Email" , emailText.getText().toString());
 
 
-                numberText.setText(mobileNumber.getText().toString());
-                emailText.setText(Email.getText().toString());
+
+                numberText.setText(numberText.getText().toString());
+                emailText.setText(emailText.getText().toString());
 
 
 

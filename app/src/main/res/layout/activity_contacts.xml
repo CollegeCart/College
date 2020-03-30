@@ -7,137 +7,131 @@
     tools:context=".contacts">
 
 
-    <TextView
-        android:id="@+id/textView9"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="4dp"
-
-        android:text="Mobile Number :"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText2"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-
-
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.115"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="parent"
-
-
-
-        />
-
-
-    <TextView
-        android:id="@+id/numbertext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-
-        android:background="@drawable/edit_back"
-        android:padding="10dp"
-        android:text="sdasdasdas"
-        android:textSize="17sp"
-
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-
-
-        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-
-        android:text="Email : "
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText3"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-
-
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="124dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.276"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Mobile Number :"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/numbertext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/edit_back"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+
+            android:hint="    Enter Number       "
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.137"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 
-    <TextView
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:id="@+id/emailText"
 
-        android:background="@drawable/edit_back"
-        android:padding="10dp"
-        android:textColor="@color/black"
-
-        android:textSize="17sp"
-
-        android:text="Emaiil"
+        android:layout_marginTop="44dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.313"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/numbertext" />
+        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+
+
+            android:layout_height="wrap_content"
+
+            android:text="Email : "
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="249dp" />
+
+        <EditText
+            android:id="@+id/emailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+
+            android:background="@drawable/edit_back"
+            android:padding="10dp"
+
+            android:hint="   Enter Email   "
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="299dp" />
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
         android:text="Others Contact You By : "
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <RadioGroup
         android:id="@+id/radioGroup2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.245"
+        app:layout_constraintHorizontal_bias="0.249"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
 
         <RadioButton
+            android:id="@+id/emailradio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/emailradio"
             android:text="Email"
             android:textAlignment="center"
 
             />
 
         <RadioButton
+            android:id="@+id/mobileradio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/mobileradio"
             android:text="Mobile NUmber"
             android:textColor="@color/black" />
 
@@ -155,9 +149,9 @@
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
-        app:layout_constraintVertical_bias="0.153" />
+        app:layout_constraintVertical_bias="0.073" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

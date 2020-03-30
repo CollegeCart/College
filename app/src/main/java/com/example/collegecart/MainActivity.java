@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,18 +29,20 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText countryCode, phoneNUm ;
+    EditText phoneNUm ;
+    TextView countryCode;
     String countryC , phoneNumber;
     TextView error;
     FirebaseAuth auth;
     FirebaseUser user;
     private  PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
-   ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseApp.initializeApp(this);
         countryCode = findViewById(R.id.countryCode);
         phoneNUm  =findViewById(R.id.phonenumber);
         auth = FirebaseAuth.getInstance();
@@ -51,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
 
 
-signInWithPhoneAuthCredential(phoneAuthCredential);
+
+                   signInWithPhoneAuthCredential(phoneAuthCredential);
+
 
             }
 
@@ -66,10 +71,12 @@ signInWithPhoneAuthCredential(phoneAuthCredential);
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(s, forceResendingToken);
 
+                Toast.makeText(MainActivity.this, "Code Sent", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this , otpcode.class);
                 intent.putExtra("AuthCredential" , s);
                 startActivity(intent);
 
+finish();
             }
         };
 
@@ -79,6 +86,11 @@ signInWithPhoneAuthCredential(phoneAuthCredential);
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     protected void onStart() {
@@ -102,11 +114,10 @@ signInWithPhoneAuthCredential(phoneAuthCredential);
 
 
 
-        countryC = String.valueOf(countryCode.getText());
         phoneNumber = String.valueOf(phoneNUm.getText());
-        String fullNo = "+"+ countryC + phoneNumber;
+        String fullNo ="+91" + phoneNumber;
 
-        if (countryC.isEmpty() || phoneNumber.isEmpty() || phoneNumber.length()<10) {
+        if (phoneNumber.isEmpty() || phoneNumber.length() != 10) {
             error.setText("***Invalid Phone Number");
         }
         else {
@@ -123,6 +134,7 @@ signInWithPhoneAuthCredential(phoneAuthCredential);
     public void skip(View view) {
         Intent intent =new Intent(this,firestoreRycycler.class);
         startActivity(intent);
+        finish();
 
 
     }

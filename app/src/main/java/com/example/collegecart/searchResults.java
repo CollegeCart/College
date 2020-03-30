@@ -1,5 +1,6 @@
 package com.example.collegecart;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,14 +40,23 @@ public class searchResults extends AppCompatActivity {
     CircleImageView imageToolbar;
     private FirebaseUser user;
     String profileurl;
+    @Keep
+    Query query;
+    CircleImageView profilepic;
     RecyclerView recyclerView;
+    SpinKitView spinKitView;
+    ImageView sharebutton;
     FirebaseFirestore firebaseFirestore;
+    @Keep
     private TextView title;
     ImageView searchProducts;
+    @Keep
     TextView additem;
     ProgressBar progressBar;
+    @Keep
     String Subject;
     private ImageView favorites;
+    private ImageView deleteProducts;
 
 
     @Override
@@ -56,16 +67,17 @@ public class searchResults extends AppCompatActivity {
 
 
 
-        progressBar = findViewById(R.id.searchProgresss);
+        spinKitView = findViewById(R.id.searchspin);
+        spinKitView.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                progressBar.setVisibility(View.GONE);
+                spinKitView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
 
             }
-        },1000);
+        },1500);
 
 
 
@@ -76,14 +88,24 @@ public class searchResults extends AppCompatActivity {
         Intent intent =  getIntent();
         Subject = intent.getStringExtra("Subject");
         View view = getSupportActionBar().getCustomView();
-        Toast.makeText(this, Subject, Toast.LENGTH_SHORT).show();
         title = view.findViewById(R.id.ti);
         title.setText("Search Results");
 
+        deleteProducts = view.findViewById(R.id.deleteProducts);
+        deleteProducts.setVisibility(View.GONE);
 
+        sharebutton = view.findViewById(R.id.shareButton);
+        sharebutton.setVisibility(View.GONE);
         favorites = view.findViewById(R.id.SaveTofavorites);
         favorites.setVisibility(View.GONE);
-        
+        profilepic = view.findViewById(R.id.imageToolbar);
+        profilepic.setImageDrawable(getResources().getDrawable(R.mipmap.backarrow));
+        profilepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         additem = findViewById(R.id.addItemToolbar);
         additem.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.SearchRecycler);
@@ -93,43 +115,111 @@ public class searchResults extends AppCompatActivity {
         recyclerView.setVisibility(View.GONE);
 
 
-        Query query = firebaseFirestore.collectionGroup("Products").whereEqualTo("subject" , Subject);
+        if (intent.getStringExtra("category").equals("Btech"))
+        {
 
-        FirestoreRecyclerOptions<ProductsModel> options = new FirestoreRecyclerOptions.Builder<ProductsModel>()
-                .setQuery(query , ProductsModel.class).build();
+            query = firebaseFirestore.collectionGroup("Products").whereEqualTo("subject" , Subject);
 
+        }
+        if (intent.getStringExtra("category").equals("Gate"))
+        {
 
-        adapter = new FirestoreRecyclerAdapter<ProductsModel, ProdHolder>(options) {
-            @NonNull
-            @Override
-            public ProdHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            query = firebaseFirestore.collectionGroup("Products").whereEqualTo("category" , intent.getStringExtra("category")).whereEqualTo("branch" , intent.getStringExtra("branch"));
 
+        }
 
+        if (intent.getStringExtra("category").equals("GRE") || intent.getStringExtra("category").equals("GMAT") )
+        {
 
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyproducts ,  parent , false);
-                return new ProdHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull ProdHolder holder, int position, @NonNull ProductsModel model) {
+            query = firebaseFirestore.collectionGroup("Products").whereEqualTo("category" , intent.getStringExtra("category"));
 
 
-                holder.subject.setText(model.getSubject());
-                holder.year.setText(model.getYear());
-                holder.branch.setText(model.getBranch());
-                holder.price.setText(model.getPrice());
-                Glide.with(searchResults.this).load(model.getImgUrl()).into(holder.image);
+        }
 
 
 
-            }
-        };
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
 
+
+                    FirestoreRecyclerOptions<ProductsModel> options = new FirestoreRecyclerOptions.Builder<ProductsModel>()
+                            .setQuery(query , ProductsModel.class).build();
+
+
+                    adapter = new FirestoreRecyclerAdapter<ProductsModel, ProdHolder>(options) {
+                        @NonNull
+                        @Override
+                        public ProdHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+
+                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyproducts ,  parent , false);
+                            return new ProdHolder(view);
+                        }
+
+                        @Override
+                        protected void onBindViewHolder(@NonNull ProdHolder holder, int position, @NonNull ProductsModel model) {
+
+
+                            holder.subject.setText(model.getSubject());
+                            holder.year.setText(model.getYear());
+                            holder.branch.setText(model.getBranch());
+                            holder.productname.setText(model.getProductname());
+                            holder.price.setText(model.getPrice());
+                            holder.url = model.getImgUrl();
+                            holder.Category = model.getCategory();
+                            holder.userame = model.getUsername();
+                            holder.userID = model.getUserID();
+
+                            switch (holder.Category)
+                            {
+                                case "Gate":
+                                {
+                                    holder.year.setVisibility(View.GONE);
+                                    holder.subject.setVisibility(View.GONE);
+                                    holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+                                }
+                                break;
+                                case "Btech":
+                                {
+
+                                    holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+
+                                }
+                                break;
+                                case "GRE":
+                                {
+                                    holder.subject.setVisibility(View.GONE);
+                                    holder.year.setVisibility(View.GONE);
+                                    holder.branch.setText(model.getBranch());
+                                }
+                                break;
+
+                                case "GMAT":
+                                {
+                                    holder.year.setVisibility(View.GONE);
+                                    holder.branch.setVisibility(View.GONE);
+                                    holder.subject.setVisibility(View.GONE);
+
+                                }
+                                break;
+
+
+                            }
+
+
+
+                            Glide.with(searchResults.this).load(model.getImgUrl()).into(holder.image);
+
+
+
+                        }
+                    };
+
+                    recyclerView.setLayoutManager(new LinearLayoutManager(searchResults.this));
+
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(adapter);
 
 
 
@@ -150,6 +240,12 @@ public class searchResults extends AppCompatActivity {
         private ImageView image;
         LinearLayout linearLayout;
 
+        String userID;
+        String userame;
+        String url;
+        String Category;
+
+        TextView productname;
 
 
         public ProdHolder(@NonNull View itemView) {
@@ -157,6 +253,8 @@ public class searchResults extends AppCompatActivity {
 
             branch = itemView.findViewById(R.id.BranchRecycler);
             year =itemView.findViewById(R.id.yearRecycler);
+            productname = itemView.findViewById(R.id.recuclerproductname);
+
             subject = itemView.findViewById(R.id.subjectReycler);
             linearLayout = itemView.findViewById(R.id.recycleLayout);
             price = itemView.findViewById(R.id.pricerecycler);
@@ -165,7 +263,24 @@ public class searchResults extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(searchResults.this, branch.getText().toString() + year.getText().toString() + subject.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(searchResults.this , ProductsDetails.class);
+                    intent.putExtra("Subject" , subject.getText().toString());
+                    intent.putExtra("Year" , year.getText().toString());
+                    intent.putExtra("productname" , productname.getText().toString());
+                    intent.putExtra("Branch" , branch.getText().toString());
+                    intent.putExtra("Price" , price.getText().toString());
+                    intent.putExtra("IMG" , url);
+                    intent.putExtra("from" , "search");
+                    intent.putExtra("ID" , userID);
+                    intent.putExtra("category" , Category);
+                    intent.putExtra("username" , userame);
+                    startActivity(intent);
+
+
+
+
+
 
                 }
             });

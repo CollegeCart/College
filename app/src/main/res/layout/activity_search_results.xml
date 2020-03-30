@@ -7,18 +7,18 @@
     tools:context=".searchResults">
 
 
-    <ProgressBar
-        android:id="@+id/searchProgresss"
-        android:layout_width="204dp"
 
-        android:layout_height="127dp"
-
-
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/searchspin"
+        style="@style/SpinKitView.Large.DoubleBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/SearchRecycler"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/SearchRecycler"

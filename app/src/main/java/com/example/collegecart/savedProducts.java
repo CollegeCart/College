@@ -42,9 +42,12 @@ public class savedProducts extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     private TextView title;
     ImageView searchProducts;
+    ImageView sharebutton;
     TextView additem;
     String Subject;
     private ImageView favorites;
+    private ImageView deleteProducts;
+    private CircleImageView profilepic;
 
 
     @Override
@@ -64,12 +67,25 @@ public class savedProducts extends AppCompatActivity {
         Subject = intent.getStringExtra("Subject");
         View view = getSupportActionBar().getCustomView();
         title = view.findViewById(R.id.ti);
-        title.setText("Search Results");
+        title.setText("Saved Products");
 
+
+        deleteProducts = view.findViewById(R.id.deleteProducts);
+        deleteProducts.setVisibility(View.GONE);
+        sharebutton = view.findViewById(R.id.shareButton);
+        sharebutton.setVisibility(View.GONE);
 
         favorites = view.findViewById(R.id.SaveTofavorites);
         user = FirebaseAuth.getInstance().getCurrentUser();
         favorites.setVisibility(View.GONE);
+        profilepic = view.findViewById(R.id.imageToolbar);
+        profilepic.setImageDrawable(getResources().getDrawable(R.mipmap.backarrow));
+        profilepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         additem = findViewById(R.id.addItemToolbar);
         additem.setVisibility(View.GONE);
@@ -105,6 +121,53 @@ public class savedProducts extends AppCompatActivity {
                 holder.year.setText(model.getYear());
                 holder.branch.setText(model.getBranch());
                 holder.price.setText(model.getPrice());
+                holder.Category = model.getCategory();
+                holder.url = model.getImgUrl();
+                holder.userame = model.getUsername();
+
+                holder.time = model.getTimestamp();
+                holder.productname.setText(model.getProductname());
+
+
+                switch (holder.Category)
+                {
+                    case "Gate":
+                    {
+                        holder.year.setVisibility(View.GONE);
+                        holder.subject.setVisibility(View.GONE);
+                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+                    }
+                    break;
+                    case "Btech":
+                    {
+
+                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+
+                    }
+                    break;
+                    case "GRE":
+                    {
+                        holder.subject.setVisibility(View.GONE);
+                        holder.year.setVisibility(View.GONE);
+                        holder.branch.setText(model.getBranch());
+                    }
+                    break;
+
+                    case "GMAT":
+                    {
+                        holder.year.setVisibility(View.GONE);
+                        holder.branch.setVisibility(View.GONE);
+                        holder.subject.setVisibility(View.GONE);
+
+                    }
+                    break;
+
+
+                }
+
+
+
+                holder.userID = model.getUserID();
                 Glide.with(savedProducts.this).load(model.getImgUrl()).into(holder.image);
 
 
@@ -137,7 +200,13 @@ public class savedProducts extends AppCompatActivity {
         private ImageView image;
         LinearLayout linearLayout;
 
+        TextView productname;
+        String userID;
+        String userame;
+        String time;
 
+        String Category;
+        String url;
 
         public Prodlder(@NonNull View itemView) {
             super(itemView);
@@ -146,13 +215,29 @@ public class savedProducts extends AppCompatActivity {
             year =itemView.findViewById(R.id.yearRecycler);
             subject = itemView.findViewById(R.id.subjectReycler);
             linearLayout = itemView.findViewById(R.id.recycleLayout);
+            productname = itemView.findViewById(R.id.recuclerproductname);
             price = itemView.findViewById(R.id.pricerecycler);
             image= itemView.findViewById(R.id.RecyclerImage);
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(savedProducts.this, branch.getText().toString() + year.getText().toString() + subject.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(savedProducts.this , ProductsDetails.class);
+                    intent.putExtra("Subject" , subject.getText().toString());
+                    intent.putExtra("Year" , year.getText().toString());
+                    intent.putExtra("Branch" , branch.getText().toString());
+                    intent.putExtra("Price" , price.getText().toString());
+                    intent.putExtra("IMG" , url);
+                    intent.putExtra("time" , time);
+
+                    intent.putExtra("ID" , userID);
+                    intent.putExtra("from" , "saved");
+                    intent.putExtra("username" , userame);
+                    intent.putExtra("category" , Category);
+                    intent.putExtra("productname" , productname.getText().toString());
+                    startActivity(intent);
+                    finish();
+
 
                 }
             });

@@ -1,5 +1,4 @@
 package com.example.collegecart;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +12,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +45,12 @@ public class firestoreRycycler extends AppCompatActivity {
     ImageView favorites;
     CircleImageView imageToolbar;
     private FirebaseUser user;
+    String gender;
     String profileurl;
+
+    SpinKitView  spinKitView;
+    ImageView sharebutton;
+    ImageView deleteProducts;
     private TextView title;
     ImageView searchProducts;
     TextView additem;
@@ -64,18 +71,47 @@ public class firestoreRycycler extends AppCompatActivity {
 
         View view = getSupportActionBar().getCustomView();
         title = view.findViewById(R.id.ti);
+        recyclerView = findViewById(R.id.ryclerId);
+
+        recyclerView.setVisibility(View.GONE);
+
         title.setText("Products");
         additem = view.findViewById(R.id.addItemToolbar);
+        sharebutton = view.findViewById(R.id.shareButton);
+        sharebutton.setVisibility(View.GONE);
         additem.setVisibility(View.GONE);
+        spinKitView = findViewById(R.id.firespin);
+        spinKitView.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
+                recyclerView.setVisibility(View.VISIBLE);
+
+                spinKitView.setVisibility(View.GONE);
+            }
+        },2000);
+
+
+        deleteProducts = view.findViewById(R.id.deleteProducts);
+        deleteProducts.setVisibility(View.GONE);
         favorites = view.findViewById(R.id.SaveTofavorites);
         favorites.setVisibility(View.GONE);
 
 
 
+
         imageToolbar = view.findViewById(R.id.imageToolbar);
+        imageToolbar.setVisibility(View.GONE);
         db = FirebaseFirestore.getInstance();
         searchProducts = findViewById(R.id.searchProducts);
+
+
+
+
+
+
+
         searchProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,41 +126,6 @@ public class firestoreRycycler extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        if (user != null)
-        {
-
-            /*
-            db.collection("Users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-
-                    profileurl = documentSnapshot.getString("profileurl");
-
-                }
-            });
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(firestoreRycycler.this, profileurl, Toast.LENGTH_SHORT).show();
-                    Glide.with(firestoreRycycler.this).load(profileurl).into(imageToolbar);
-                }
-            },1000);
-
-
-
-             */
-
-
-            String picIage = user.getPhotoUrl().toString();
-            Toast.makeText(this, picIage, Toast.LENGTH_SHORT).show();
-            Glide.with(this).load(picIage).skipMemoryCache(true).into(imageToolbar);
-
-
-
-        }
-
-
 
 
 
@@ -134,19 +135,64 @@ public class firestoreRycycler extends AppCompatActivity {
                 if (user !=null)
                 {
                     Intent intent = new Intent(firestoreRycycler.this , Main3Activity.class);
+                    intent.putExtra("Gender" , gender);
                     startActivity(intent);
                 }
                 else {
 
                     Intent intent = new Intent(firestoreRycycler.this , MainActivity.class);
                     startActivity(intent);
+                    finish();
 
                 }
             }
         });
 
-        recyclerView = findViewById(R.id.ryclerId);
+
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+      if(user != null)
+      {
+
+       new Handler().postDelayed(new Runnable() {
+           @Override
+           public void run() {
+               firebaseFirestore.collection("Users").document(user.getUid()).get().addOnSuccessListener(
+                       new OnSuccessListener<DocumentSnapshot>() {
+                           @Override
+                           public void onSuccess(DocumentSnapshot documentSnapshot) {
+                               gender = documentSnapshot.getString("Gender");
+                               if (gender.equals("Female"))
+                               {
+                                   Glide.with(firestoreRycycler.this).load(R.mipmap.female).into(imageToolbar);
+                               }
+                               else
+                               {
+
+                                   Glide.with(firestoreRycycler.this).load(R.mipmap.male).into(imageToolbar);
+
+                               }
+                               imageToolbar.setVisibility(View.VISIBLE);
+
+                           }
+                       }
+               );
+           }
+       },1000);
+
+
+
+       new Handler().postDelayed(new Runnable() {
+           @Override
+           public void run() {
+
+
+
+
+           }
+       },2000);
+
+      }
 
 
         Query query = firebaseFirestore.collectionGroup("Products");
@@ -174,8 +220,57 @@ public class firestoreRycycler extends AppCompatActivity {
 
                 holder.subject.setText(model.getSubject());
                 holder.year.setText(model.getYear());
-                holder.branch.setText(model.getBranch());
+
                 holder.url = model.getImgUrl();
+                holder.time = model.getTimestamp();
+                holder.branch.setText(model.getBranch() + model.getCategory());
+
+                holder.userame = model.getUsername();
+                holder.Category = model.getCategory();
+                holder.productname.setText(model.getProductname());
+
+                holder.userID = model.getUserID();
+
+                switch (holder.Category)
+                {
+                    case "Gate":
+                    {
+                        holder.year.setVisibility(View.GONE);
+                        holder.subject.setVisibility(View.GONE);
+                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+                    }
+                    break;
+                    case "Btech":
+                    {
+
+                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+                        holder.subject.setText(model.getSubject());
+                        holder.year.setText(model.getYear());
+
+                    }
+                    break;
+                    case "GRE":
+                    {
+                        holder.subject.setVisibility(View.GONE);
+                        holder.year.setVisibility(View.GONE);
+                        holder.branch.setText(model.getBranch());
+                    }
+                    break;
+
+                    case "GMAT":
+                    {
+                        holder.year.setVisibility(View.GONE);
+                        holder.branch.setVisibility(View.GONE);
+                        holder.subject.setVisibility(View.GONE);
+
+                    }
+                    break;
+
+
+                }
+
+
+
                 holder.price.setText(model.getPrice());
                 Glide.with(firestoreRycycler.this).load(model.getImgUrl()).into(holder.image);
 
@@ -196,6 +291,7 @@ public class firestoreRycycler extends AppCompatActivity {
 
     }
 
+
     public class ProductsViewHolder extends  RecyclerView.ViewHolder{
 
         private TextView branch;
@@ -207,19 +303,30 @@ public class firestoreRycycler extends AppCompatActivity {
         private ImageView image;
         String url;
         LinearLayout linearLayout;
+        TextView productname;
+        String time;
+        String userID;
+        String Category;
+        String userame;
 
 
 
         public ProductsViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
+
             branch = itemView.findViewById(R.id.BranchRecycler);
             year =itemView.findViewById(R.id.yearRecycler);
             subject = itemView.findViewById(R.id.subjectReycler);
             price = itemView.findViewById(R.id.pricerecycler);
+            productname = itemView.findViewById(R.id.recuclerproductname);
 
             linearLayout = itemView.findViewById(R.id.recycleLayout);
             image= itemView.findViewById(R.id.RecyclerImage);
+
+
+
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -232,7 +339,12 @@ public class firestoreRycycler extends AppCompatActivity {
                     intent.putExtra("Branch" , branch.getText().toString());
                     intent.putExtra("Price" , price.getText().toString());
                     intent.putExtra("IMG" , url);
-                    Toast.makeText(firestoreRycycler.this, url, Toast.LENGTH_SHORT).show();
+                    intent.putExtra("ID" , userID);
+                    intent.putExtra("category" , Category);
+                    intent.putExtra("time" , time);
+                    intent.putExtra("from" , "firestore");
+                    intent.putExtra("username" , userame);
+                    intent.putExtra("productname" , productname.getText().toString());
                     startActivity(intent);
 
 
@@ -246,6 +358,7 @@ public class firestoreRycycler extends AppCompatActivity {
 
         }
     }
+
 
 
     @Override

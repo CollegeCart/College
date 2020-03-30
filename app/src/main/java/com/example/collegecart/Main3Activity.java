@@ -3,11 +3,13 @@ package com.example.collegecart;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.usage.NetworkStats;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
+import android.transition.Fade;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,8 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,8 +36,15 @@ public class Main3Activity extends AppCompatActivity {
     ImageView search;
     TextView savedProducts , contactInfoo;
     private TextView title;
+    ImageView sharebutton;
     private TextView additem;
     FirebaseUser usr;
+    private ImageView deleteProducts;
+    private ImageView favorites;
+    private CircleImageView profilepic;
+    private FirebaseFirestore db;
+    private FirebaseUser user;
+    private String gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +52,31 @@ public class Main3Activity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main3);
 
+
       getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
       getSupportActionBar().setDisplayShowCustomEnabled(true);
       getSupportActionBar().setCustomView(R.layout.toolbaaar);
 
       View view = getSupportActionBar().getCustomView();
 
+      db = FirebaseFirestore.getInstance();
+      user = FirebaseAuth.getInstance().getCurrentUser();
 
 
+        deleteProducts = view.findViewById(R.id.deleteProducts);
+        deleteProducts.setVisibility(View.GONE);
         title = view.findViewById(R.id.ti);
         title.setText("Profile");
+        favorites = view.findViewById(R.id.SaveTofavorites);
+        favorites.setVisibility(View.GONE);
+        profilepic =findViewById(R.id.circleView);
+
+        sharebutton = view.findViewById(R.id.shareButton);
+        sharebutton.setVisibility(View.GONE);
+
+
+
+
         additem = view.findViewById(R.id.addItemToolbar);
         savedProducts = findViewById(R.id.textView2);
         contactInfoo = findViewById(R.id.textView3);
@@ -71,6 +99,36 @@ public class Main3Activity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
+
+        if (getIntent().getStringExtra("Gender").equals("Female"))
+        {
+            Glide.with(this).load(R.mipmap.female).into(profilepic);
+        }
+        else
+        {
+
+            Glide.with(this).load(R.mipmap.male).into(profilepic);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         search.setVisibility(View.GONE);
         additem.setVisibility(View.GONE);
          circleImageView = view.findViewById(R.id.imageToolbar);
@@ -87,9 +145,14 @@ public class Main3Activity extends AppCompatActivity {
              }
          });
 
-        circleImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
 
-
+        circleImageView.setImageDrawable(getResources().getDrawable(R.mipmap.backarrow));
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
 
@@ -99,22 +162,6 @@ public class Main3Activity extends AppCompatActivity {
         imgView = findViewById(R.id.circleView);
 
          usr = auth.getCurrentUser();
-     new Handler().postDelayed(new Runnable() {
-         @Override
-         public void run() {
-
-
-             if (usr != null)
-             {
-                 String picIage = usr.getPhotoUrl().toString();
-
-                 Toast.makeText(Main3Activity.this, picIage, Toast.LENGTH_SHORT).show();
-                 Glide.with(Main3Activity.this).load(picIage).skipMemoryCache(true).into(imgView);
-             }
-
-
-         }
-     },2000);
 
 
 
@@ -132,6 +179,8 @@ public class Main3Activity extends AppCompatActivity {
         });
 
     }
+
+
 
 
 }

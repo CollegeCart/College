@@ -7,16 +7,18 @@
     android:background="@drawable/backk"
     tools:context=".profile">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/profilespin"
+        style="@style/SpinKitView.Large.DoubleBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/profileLinearLaout"
@@ -25,76 +27,98 @@
 
         android:layout_height="match_parent"
         android:orientation="vertical"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView"
-            android:layout_width="175dp"
-            android:layout_height="152dp"
-            app:civ_border_color="@color/black"
-            app:civ_border_width="1dp"
-            android:layout_marginLeft="110dp"
-            android:layout_marginTop="20dp"
-
-
-            android:onClick="proFilepicTure"
-            android:src="@drawable/img"
-
-            />
 
         <EditText
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="102dp"
             android:background="@drawable/edit_back"
             android:hint="        Enter User Name        "
-          android:padding="10dp"
+            android:padding="10dp"
 
             />
 
 
-
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
             android:id="@+id/email"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:hint="           Enter Email               "
-            android:layout_marginLeft="80dp"
+            android:layout_width="wrap_content"
 
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edit_back"
+            android:hint="           Enter Email               "
+
+            android:padding="10dp"
 
             />
 
 
-
         <EditText
+            android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/number"
-            android:padding="10dp"
-            android:hint="            Enter Number          "
             android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_back"
+            android:hint="            Enter Number          "
             android:inputType="number"
 
-            android:background="@drawable/edit_back"
+            android:padding="10dp"
 
             />
+
+
+        <RadioGroup
+            android:id="@+id/genderRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="30dp"
+
+            >
+
+            <RadioButton
+                android:id="@+id/maleradio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="male"
+                android:text="Male"
+
+                />
+
+
+            <RadioButton
+                android:id="@+id/femaleRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="female"
+                android:text="Female"
+
+
+                />
+
+
+        </RadioGroup>
+
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="130dip"
+            android:layout_marginLeft="140dip"
             android:layout_marginTop="36dp"
+
             android:background="@drawable/button_back"
             android:fontFamily="sans-serif-condensed-light"
             android:onClick="onFinsh"
@@ -109,4 +133,22 @@
 
 
     </LinearLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spinprofile"
+        style="@style/SpinKitView.Large.DoubleBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        app:SpinKit_Color="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

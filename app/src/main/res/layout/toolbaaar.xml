@@ -16,9 +16,7 @@
 
 
         android:layout_marginTop="4dp"
-        android:src="@android:drawable/ic_menu_camera"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="1dp"
+        android:src="@mipmap/acouunt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ti"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,18 +40,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
         android:id="@+id/searchProducts"
         android:layout_width="34dp"
         android:layout_height="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
 
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toEndOf="@+id/ti"
         app:layout_constraintTop_toTopOf="@+id/addItemToolbar"
-        app:srcCompat="@android:drawable/ic_menu_search" />
+        app:srcCompat="@mipmap/search"
+
+        />
+
+    <ImageView
+        android:id="@+id/deleteProducts"
+        android:layout_width="34dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.993"
+        app:layout_constraintStart_toEndOf="@+id/ti"
+        app:layout_constraintTop_toTopOf="@+id/addItemToolbar"
+        app:srcCompat="@mipmap/delete"
+
+
+        />
 
     <TextView
         android:id="@+id/addItemToolbar"
@@ -73,18 +90,34 @@
         app:layout_constraintStart_toEndOf="@+id/ti"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/shareButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="14dp"
+
+
+        android:src="@mipmap/share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/searchProducts"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toEndOf="@+id/ti"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
         android:id="@+id/SaveTofavorites"
+        android:layout_width="40dp"
 
+        android:layout_height="40dp"
+
+        android:layout_marginStart="140dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.789"
         app:layout_constraintStart_toEndOf="@+id/ti"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+
+
+        app:srcCompat="@mipmap/save" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,9 +22,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,30 +41,42 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class sell extends AppCompatActivity {
 
     Spinner spinnercategories;
-    ProgressDialog progressDialog;
     FirebaseFirestore db;
+    TextView additem;
+
     Spinner branchSpinner , yearSpinner , SubjectSpinner , greSpinner;
     String category;
     FirebaseAuth auth;
     String Branch , Year , Subject;
     Button updateButton;
+        SpinKitView spinKitView;
     ArrayAdapter subjectAdapter , branchAdapter , yearAdapter;
     List<String> branchList , subjectList;
     String downloadURL;
     String Price;
+
+    String username;
+    ImageView searchProducts;
+
+
+    EditText pname;
     ImageView imageView;
     EditText price;
 
@@ -70,7 +86,15 @@ public class sell extends AppCompatActivity {
     private int CHOSE_IMAGE = 101;
     private Uri uriimage;
     private ImageView profileimage;
+    private ImageView favorites;
+    private ImageView deleteProducts;
+    String BuyYear;
+    ImageView sharebutton;
+    CircleImageView profilepic;
+
     String userid;
+    private TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,8 +105,44 @@ public class sell extends AppCompatActivity {
 
 
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.toolbaaar);
+
+        View view = getSupportActionBar().getCustomView();
+        title = view.findViewById(R.id.ti);
+        title.setText("Add Product");
+
+        deleteProducts = view.findViewById(R.id.deleteProducts);
+        deleteProducts.setVisibility(View.GONE);
+
+        favorites = view.findViewById(R.id.SaveTofavorites);
+        sharebutton = view.findViewById(R.id.shareButton);
+        sharebutton.setVisibility(View.GONE);
+        favorites.setVisibility(View.GONE);
+        profilepic = view.findViewById(R.id.imageToolbar);
+
+        profilepic.setImageDrawable(getResources().getDrawable(R.mipmap.backarrow));
+        profilepic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        additem = findViewById(R.id.addItemToolbar);
+        additem.setVisibility(View.GONE);
+        searchProducts = findViewById(R.id.searchProducts);
+        searchProducts.setVisibility(View.GONE);
+
+
+
+
+
+
+
 
         profileimage = findViewById(R.id.productImagee);
+        profileimage.setVisibility(View.GONE);
         auth = FirebaseAuth.getInstance();
 
 
@@ -90,12 +150,9 @@ public class sell extends AppCompatActivity {
 
 
 
-        progressDialog = new ProgressDialog(this);
 
-        progressDialog.setTitle("Contents Loading");
         updateButton = findViewById(R.id.buttonToUpdateFirebase);
-        progressDialog.setMessage("Loading.......");
-        progressDialog.show();
+        updateButton.setVisibility(View.GONE);
 
         greSpinner = findViewById(R.id.greSpinner);
         branchSpinner = findViewById(R.id.branchspin);
@@ -104,9 +161,16 @@ public class sell extends AppCompatActivity {
         branchList = new ArrayList<>();
         spinnercategories.setVisibility(View.GONE);
         subjectList = new ArrayList<>();
+        pname = findViewById(R.id.productNmae);
+        pname.setVisibility(View.GONE);
         yearSpinner = findViewById(R.id.yearspin);
         db = FirebaseFirestore.getInstance();
         price = findViewById(R.id.editText);
+        price.setVisibility(View.GONE);
+        spinKitView = findViewById(R.id.spin_kit);
+        spinKitView.setVisibility(View.VISIBLE);
+
+
 
 
         branchSpinner.setVisibility(View.GONE);
@@ -122,8 +186,22 @@ public class sell extends AppCompatActivity {
             @Override
             public void run() {
 
+                profileimage.setVisibility(View.VISIBLE);
+                updateButton.setVisibility(View.VISIBLE);
+                price.setVisibility(View.VISIBLE);
+                pname.setVisibility(View.VISIBLE);
 
-             progressDialog.dismiss();
+                db.collection("Users").document(userid).get().addOnSuccessListener(
+                        new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                username = documentSnapshot.getString("Username");
+
+                            }
+                        }
+                );
+                spinKitView.setVisibility(View.GONE);
                 spinnercategories.setVisibility(View.VISIBLE);
 
             }
@@ -131,39 +209,194 @@ public class sell extends AppCompatActivity {
 
 
         updateButton.setAlpha(.5f);
-        updateButton.setClickable(false);
+        updateButton.setEnabled(false);
             updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
 
+                greSpinner.setVisibility(View.GONE);
+                branchSpinner.setVisibility(View.GONE);
+                yearSpinner.setVisibility(View.GONE);
+                profileimage.setVisibility(View.GONE);
+                SubjectSpinner.setVisibility(View.GONE);
+                spinnercategories.setVisibility(View.GONE);
 
-                progressDialog.show();
-
-
-
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        progressDialog.dismiss();
-
-                        Price = " Rs " + price.getText().toString();
-
-                        final ProductsModel product = new ProductsModel(Branch , Subject , Year , category , downloadURL , Price );
+                updateButton.setVisibility(View.GONE);
+                price.setVisibility(View.GONE);
+                pname.setVisibility(View.GONE);
 
 
+                spinKitView.setVisibility(View.VISIBLE);
+
+                Random random = new Random();
+                final SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy-ss-hh-mm");
+                final String timestamp =   random.nextInt(1000000000)+format.format(new Date());
 
 
 
-                        db.collection("Users").document(userid).collection("Products").add(product);
-                        Toast.makeText(sell.this, product.getImgUrl(), Toast.LENGTH_SHORT).show();
+                switch (category)
+                {
+                    case "Btech" : {
+
+
+
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+
+
+
+
+
+
+                                Price = " Rs " + price.getText().toString();
+
+                                final ProductsModel product = new ProductsModel(pname.getText().toString() , Branch, Subject, Year, category, downloadURL, Price, userid, username , timestamp);
+
+
+                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                spinKitView.setVisibility(View.GONE);
+                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(sell.this , myProducts.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+                                );
+
+                            }
+                        }, 1000);
+
 
                     }
-                } , 1000);
+                    break;
+                    case "Gate" :
+                    {
+
+
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+
+                                Price = " Rs " + price.getText().toString();
+
+                                final ProductsModel product = new ProductsModel(pname.getText().toString() , branchSpinner.getSelectedItem().toString(), "", "", "Gate", downloadURL, Price, userid, username , timestamp);
+
+
+                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                spinKitView.setVisibility(View.GONE);
+
+                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(sell.this , myProducts.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+                                );
+
+                            }
+                        }, 1000);
+
+
+
+                    }
+                    break;
+
+                    case "GRE" :
+                    {
+
+
+
+
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+
+                                Price = " Rs " + price.getText().toString();
+
+                                final ProductsModel product = new ProductsModel(pname.getText().toString() , "GRE", "", "", "GRE", downloadURL, Price, userid, username , timestamp);
+
+
+                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                spinKitView.setVisibility(View.GONE);
+
+                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(sell.this , myProducts.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+                                );
+
+                            }
+                        }, 1000);
+
+
+
+                    }
+                    break;
+                    case "GMAT" :
+                    {
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+
+                                Price = " Rs " + price.getText().toString();
+
+                                final ProductsModel product = new ProductsModel(pname.getText().toString() , "", "", "", "GMAT", downloadURL, Price, userid, username ,timestamp);
+
+                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                        new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                                spinKitView.setVisibility(View.GONE);
+
+                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(sell.this , myProducts.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+                                );
+
+
+                            }
+                        }, 1000);
+
+
+                    }
+                    break;
+                    default:
+                    {
+                        Toast.makeText(sell.this, "Invalid Choice", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+
+
+
+
 
             }
         });
@@ -474,8 +707,7 @@ public class sell extends AppCompatActivity {
 
                             Uri downloadURI = uri;
                             downloadURL = downloadURI.toString();
-                            updateButton.setClickable(true);
-                            updateButton.setAlpha(1f);
+
 
 
 
@@ -494,6 +726,8 @@ public class sell extends AppCompatActivity {
     public void productImage(View view) {
 
 
+        updateButton.setEnabled(true);
+        updateButton.setAlpha(1f);
         Intent intent= new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);

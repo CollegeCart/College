@@ -26,29 +26,42 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/button_back"
         android:paddingLeft="10dp"
+
+
         android:paddingRight="10dp"
-
-
         android:text="Login/SignUp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pricedetails" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="**You Need To Login To See The Contact Information"
+        android:textColor="@color/red"
+        android:id="@+id/notloginText"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginDetails"
+        app:layout_constraintVertical_bias="0.069" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Subject"
+        android:layout_marginTop="8dp"
 
+        android:text="Subject"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView6"
@@ -84,17 +97,31 @@
 
 
     <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Product Name"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
         android:id="@+id/pricedetails"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
+
         android:layout_marginTop="8dp"
 
         android:text="Price"
         android:textColor="#006200"
-
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -103,14 +130,14 @@
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:text="Seller Name"
+        android:layout_marginTop="68dp"
+        android:text="Seller"
 
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -121,18 +148,18 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="8dp"
-        android:textStyle="bold"
+        android:text="Contact"
 
-        android:text="Seller Contact"
         android:textColor="@color/black"
-
-
         android:textSize="20sp"
+
+
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.007" />
+        app:layout_constraintVertical_bias="0.016" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

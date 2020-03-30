@@ -74,7 +74,8 @@ public class otpcode extends AppCompatActivity {
                             // Sign in failed, display a message and update the UI
                             Toast.makeText(otpcode.this, "Error Ocurred", Toast.LENGTH_SHORT).show();
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
+                                // The verificTation code entered was invalid
+                                Toast.makeText(otpcode.this, "Invalid Code", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -82,4 +83,12 @@ public class otpcode extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+
+
+        Toast.makeText(this, "Do You Really Want  To Quit", Toast.LENGTH_SHORT).show();
+        super.onPause();
+
+    }
 }

@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
 
 
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="22dp"
 
 
         android:background="@drawable/gradient_spinner"
@@ -48,7 +48,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
 
         android:background="@drawable/gradient_spinner"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
         android:id="@+id/yearspin"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
 
 
         android:background="@drawable/gradient_spinner"
@@ -73,7 +73,7 @@
         android:id="@+id/subjectspin"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
 
         android:background="@drawable/gradient_spinner"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
 
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
 
         android:background="@drawable/gradient_spinner"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,6 +111,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greSpinner" />
 
+
+    <EditText
+        android:id="@+id/productNmae"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_back"
+
+        android:hint="    Enter Product Name          "
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+
     <Button
         android:id="@+id/buttonToUpdateFirebase"
         android:layout_width="wrap_content"
@@ -121,8 +137,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintTop_toBottomOf="@+id/productNmae"
+        app:layout_constraintVertical_bias="0.099" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
