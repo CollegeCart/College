@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.transition.Slide;
@@ -53,6 +55,7 @@ public class firestoreRycycler extends AppCompatActivity {
     ImageView deleteProducts;
     private TextView title;
     ImageView searchProducts;
+    Query query;
     TextView additem;
 
 
@@ -194,102 +197,116 @@ public class firestoreRycycler extends AppCompatActivity {
 
       }
 
-
-        Query query = firebaseFirestore.collectionGroup("Products");
-
-
-        FirestoreRecyclerOptions<ProductsModel> options = new FirestoreRecyclerOptions.Builder<ProductsModel>()
-                .setQuery(query , ProductsModel.class).build();
-
-
-        adapter = new FirestoreRecyclerAdapter<ProductsModel, ProductsViewHolder>(options) {
-            @NonNull
-            @Override
-            public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+      if (isInternetConnection())
+      {
+          query = firebaseFirestore.collectionGroup("Products");
 
 
 
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyproducts ,  parent , false);
-                return new ProductsViewHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull ProductsViewHolder holder, int position, @NonNull ProductsModel model) {
+          FirestoreRecyclerOptions<ProductsModel> options = new FirestoreRecyclerOptions.Builder<ProductsModel>()
+                  .setQuery(query , ProductsModel.class).build();
 
 
-
-                holder.subject.setText(model.getSubject());
-                holder.year.setText(model.getYear());
-
-                holder.url = model.getImgUrl();
-                holder.time = model.getTimestamp();
-                holder.branch.setText(model.getBranch() + model.getCategory());
-
-                holder.userame = model.getUsername();
-                holder.Category = model.getCategory();
-                holder.productname.setText(model.getProductname());
-
-                holder.userID = model.getUserID();
-
-                switch (holder.Category)
-                {
-                    case "Gate":
-                    {
-                        holder.year.setVisibility(View.GONE);
-                        holder.subject.setVisibility(View.GONE);
-                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-                    }
-                    break;
-                    case "Btech":
-                    {
-
-                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-                        holder.subject.setText(model.getSubject());
-                        holder.year.setText(model.getYear());
-
-                    }
-                    break;
-                    case "GRE":
-                    {
-                        holder.subject.setVisibility(View.GONE);
-                        holder.year.setVisibility(View.GONE);
-                        holder.branch.setText(model.getBranch());
-                    }
-                    break;
-
-                    case "GMAT":
-                    {
-                        holder.year.setVisibility(View.GONE);
-                        holder.branch.setVisibility(View.GONE);
-                        holder.subject.setVisibility(View.GONE);
-
-                    }
-                    break;
-
-
-                }
+          adapter = new FirestoreRecyclerAdapter<ProductsModel, ProductsViewHolder>(options) {
+              @NonNull
+              @Override
+              public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
 
-                holder.price.setText(model.getPrice());
-                Glide.with(firestoreRycycler.this).load(model.getImgUrl()).into(holder.image);
+                  View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyproducts ,  parent , false);
+                  return new ProductsViewHolder(view);
+              }
+
+              @Override
+              protected void onBindViewHolder(@NonNull ProductsViewHolder holder, int position, @NonNull ProductsModel model) {
 
 
 
-            }
-        };
+                  holder.subject.setText(model.getSubject());
+                  holder.year.setText(model.getYear());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                  holder.url = model.getImgUrl();
+                  holder.time = model.getTimestamp();
+                  holder.branch.setText(model.getBranch() + model.getCategory());
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+                  holder.userame = model.getUsername();
+                  holder.Category = model.getCategory();
+                  holder.productname.setText(model.getProductname());
+
+                  holder.userID = model.getUserID();
+
+                  switch (holder.Category)
+                  {
+                      case "Gate":
+                      {
+                          holder.year.setVisibility(View.GONE);
+                          holder.subject.setVisibility(View.GONE);
+                          holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+                      }
+                      break;
+                      case "Btech":
+                      {
+
+                          holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
+                          holder.subject.setText(model.getSubject());
+                          holder.year.setText(model.getYear());
+
+                      }
+                      break;
+                      case "GRE":
+                      {
+                          holder.subject.setVisibility(View.GONE);
+                          holder.year.setVisibility(View.GONE);
+                          holder.branch.setText(model.getBranch());
+                      }
+                      break;
+
+                      case "GMAT":
+                      {
+                          holder.year.setVisibility(View.GONE);
+                          holder.branch.setVisibility(View.GONE);
+                          holder.subject.setVisibility(View.GONE);
+
+                      }
+                      break;
+
+
+                  }
+
+
+
+                  holder.price.setText(model.getPrice());
+                  Glide.with(firestoreRycycler.this).load(model.getImgUrl()).into(holder.image);
+
+
+
+              }
+          };
+
+          recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+          recyclerView.setHasFixedSize(true);
+          recyclerView.setAdapter(adapter);
 
 
 
 
 
 
-    }
+      }
+      else
+      {
+          Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+      }
+
+
+      }
+
+
+
+
+
 
 
     public class ProductsViewHolder extends  RecyclerView.ViewHolder{
@@ -380,6 +397,24 @@ public class firestoreRycycler extends AppCompatActivity {
 
 
     }
+
+
+
+    public  boolean isInternetConnection()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return  true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+
 
 
 }

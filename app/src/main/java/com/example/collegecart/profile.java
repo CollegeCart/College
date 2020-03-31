@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.common.api.Api;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,11 +53,13 @@ CircleImageView profileimage;
 FirebaseFirestore db;
 @Keep
 String userid;
-    String url;
+    String urrl;
+    SpinKitView spinKitView;
     RadioGroup genderGroup;
     @Keep
 EditText username , number , email;
 LinearLayout layout;
+    Map<String , String> url;
 RadioButton female,male;
 
 @Keep
@@ -78,9 +81,11 @@ FirebaseAuth auth;
         auth = FirebaseAuth.getInstance();
 
         db = FirebaseFirestore.getInstance();
+        spinKitView = findViewById(R.id.spinprofile);
         layout =  findViewById(R.id.profileLinearLaout);
         layout.setVisibility(View.GONE);
 
+        spinKitView.setVisibility(View.GONE);
 
         userid = auth.getUid();
 
@@ -89,7 +94,7 @@ FirebaseAuth auth;
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                url = documentSnapshot.getString("Contact");
+                urrl = documentSnapshot.getString("Contact");
 
 
 
@@ -97,11 +102,15 @@ FirebaseAuth auth;
         });
 
 
+
+
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if (url !=null)
+                if (urrl !=null)
                 {
 
                     Intent intent = new Intent(profile.this , firestoreRycycler.class);
@@ -124,6 +133,8 @@ FirebaseAuth auth;
     public void onFinsh(View view) {
 
 
+        spinKitView.setVisibility(View.VISIBLE);
+
         layout.setVisibility(View.GONE);
         if (email.getText().toString().isEmpty() || number.getText().toString().isEmpty() || username.getText().toString().isEmpty())
         {
@@ -139,6 +150,7 @@ FirebaseAuth auth;
                 public void run() {
 
 
+                    spinKitView.setVisibility(View.GONE);
 
                     Intent intent = new Intent(profile.this , firestoreRycycler.class);
                     startActivity(intent);
@@ -160,18 +172,21 @@ FirebaseAuth auth;
 
 
 
-            Map<String , String> url = new HashMap<>();
+          url = new HashMap<>();
 
-            if (female.getText().toString().isEmpty())
+            if (female.isChecked())
             {
-                url.put("Gender" , male.getText().toString());
-            }
-            if (male.getText().toString().isEmpty())
-            {
-                url.put("Gender" ,female.getText().toString());
+                url.put("Gender" , "Female");
 
             }
+            if (male.isChecked())
+            {
+                url.put("Gender" ,"Male");
 
+
+            }
+
+        Toast.makeText(this, url.get("Gender"), Toast.LENGTH_SHORT).show();
             url.put("Username" , username.getText().toString());
             url.put("Email" , email.getText().toString());
             url.put("Contact" , email.getText().toString());
