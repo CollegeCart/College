@@ -9,6 +9,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -81,8 +83,10 @@ public class sell extends AppCompatActivity {
     EditText price;
 
 
+    String greList[] = {"AWA(Analytical Writing)" , "Quantitative Reasoning" , "Verbal Reasoning" , "Physics" , "Chemistry" , "Mathematics" , "Literature In English" , "Biology" , "Psychology"};
+    String gmatList[] = {"AWA(Analytical Writing)" , "Quantitative" , "Verbal" , "Integrated Reasoning"};
     String[]  Categories = {"Select Categories" ,"GMAT" , "Btech" , "GRE" , "Gate"};
-    String[]  YearList = {"Second Year" , "Third Year" , "Fourth Year"};
+    String[]  YearList = {"Second Year" , "Third Year" , "Fourth Year" , "Accessories"};
     private int CHOSE_IMAGE = 101;
     private Uri uriimage;
     private ImageView profileimage;
@@ -212,188 +216,203 @@ public class sell extends AppCompatActivity {
         updateButton.setEnabled(false);
             updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
-
-
-                greSpinner.setVisibility(View.GONE);
-                branchSpinner.setVisibility(View.GONE);
-                yearSpinner.setVisibility(View.GONE);
-                profileimage.setVisibility(View.GONE);
-                SubjectSpinner.setVisibility(View.GONE);
-                spinnercategories.setVisibility(View.GONE);
-
-                updateButton.setVisibility(View.GONE);
-                price.setVisibility(View.GONE);
-                pname.setVisibility(View.GONE);
-
-
-                spinKitView.setVisibility(View.VISIBLE);
-
-                Random random = new Random();
-                final SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy-ss-hh-mm");
-                final String timestamp =   random.nextInt(1000000000)+format.format(new Date());
-
-
-
-                switch (category)
+                if (isInternetConnection())
                 {
-                    case "Btech" : {
-
-
-
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-
-
-
-
-
-
-                                Price = " Rs " + price.getText().toString();
-
-                                final ProductsModel product = new ProductsModel(pname.getText().toString() , Branch, Subject, Year, category, downloadURL, Price, userid, username , timestamp);
-
-
-                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
-                                        new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                spinKitView.setVisibility(View.GONE);
-                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(sell.this , myProducts.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-                                );
-
-                            }
-                        }, 1000);
-
-
-                    }
-                    break;
-                    case "Gate" :
+                    if (imageView !=  null)
                     {
 
+                        greSpinner.setVisibility(View.GONE);
+                        branchSpinner.setVisibility(View.GONE);
+                        yearSpinner.setVisibility(View.GONE);
+                        profileimage.setVisibility(View.GONE);
+                        SubjectSpinner.setVisibility(View.GONE);
+                        spinnercategories.setVisibility(View.GONE);
+
+                        updateButton.setVisibility(View.GONE);
+                        price.setVisibility(View.GONE);
+                        pname.setVisibility(View.GONE);
 
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
+                        spinKitView.setVisibility(View.VISIBLE);
 
-
-                                Price = " Rs " + price.getText().toString();
-
-                                final ProductsModel product = new ProductsModel(pname.getText().toString() , branchSpinner.getSelectedItem().toString(), "", "", "Gate", downloadURL, Price, userid, username , timestamp);
-
-
-                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
-                                        new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                spinKitView.setVisibility(View.GONE);
-
-                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(sell.this , myProducts.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-                                );
-
-                            }
-                        }, 1000);
+                        Random random = new Random();
+                        final SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy-ss-hh-mm");
+                        final String timestamp =   random.nextInt(1000000000)+format.format(new Date());
 
 
 
-                    }
-                    break;
+                        switch (category)
+                        {
+                            case "Btech" : {
 
-                    case "GRE" :
-                    {
+
+
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
 
 
 
 
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
 
 
-                                Price = " Rs " + price.getText().toString();
+                                        Price = " Rs " + price.getText().toString();
 
-                                final ProductsModel product = new ProductsModel(pname.getText().toString() , "GRE", "", "", "GRE", downloadURL, Price, userid, username , timestamp);
-
-
-                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
-                                        new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                spinKitView.setVisibility(View.GONE);
-
-                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(sell.this , myProducts.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-                                );
-
-                            }
-                        }, 1000);
+                                        final ProductsModel product = new ProductsModel(pname.getText().toString() , Branch, Subject, Year, category, downloadURL, Price, userid, username , timestamp);
 
 
+                                        db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                                new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        spinKitView.setVisibility(View.GONE);
+                                                        Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(sell.this , myProducts.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                        );
 
-                    }
-                    break;
-                    case "GMAT" :
-                    {
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-
-                                Price = " Rs " + price.getText().toString();
-
-                                final ProductsModel product = new ProductsModel(pname.getText().toString() , "", "", "", "GMAT", downloadURL, Price, userid, username ,timestamp);
-
-                                db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
-                                        new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-
-                                                spinKitView.setVisibility(View.GONE);
-
-                                                Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(sell.this , myProducts.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
-                                );
+                                    }
+                                }, 1000);
 
 
                             }
-                        }, 1000);
+                            break;
+                            case "Gate" :
+                            {
+
+
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+
+                                        Price = " Rs " + price.getText().toString();
+
+                                        final ProductsModel product = new ProductsModel(pname.getText().toString() , branchSpinner.getSelectedItem().toString(), "", "", "Gate", downloadURL, Price, userid, username , timestamp);
+
+
+                                        db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                                new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        spinKitView.setVisibility(View.GONE);
+
+                                                        Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(sell.this , myProducts.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                        );
+
+                                    }
+                                }, 1000);
+
+
+
+                            }
+                            break;
+
+                            case "GRE" :
+                            {
+
+
+
+
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+
+                                        Price = " Rs " + price.getText().toString();
+
+                                        final ProductsModel product = new ProductsModel(pname.getText().toString() , "", Subject, "", "GRE", downloadURL, Price, userid, username , timestamp);
+
+
+                                        db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                                new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        spinKitView.setVisibility(View.GONE);
+
+                                                        Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(sell.this , myProducts.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                        );
+
+                                    }
+                                }, 1000);
+
+
+
+                            }
+                            break;
+                            case "GMAT" :
+                            {
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+
+                                        Price = " Rs " + price.getText().toString();
+
+                                        final ProductsModel product = new ProductsModel(pname.getText().toString() , "", Subject, "", "GMAT", downloadURL, Price, userid, username ,timestamp);
+
+                                        db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                                new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+
+                                                        spinKitView.setVisibility(View.GONE);
+
+                                                        Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(sell.this , myProducts.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                        );
+
+
+                                    }
+                                }, 1000);
+
+
+                            }
+                            break;
+                            default:
+                            {
+                                Toast.makeText(sell.this, "Invalid Choice", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
 
 
                     }
-                    break;
-                    default:
+                    else
                     {
-                        Toast.makeText(sell.this, "Invalid Choice", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(sell.this, "Product Image Is Required", Toast.LENGTH_SHORT).show();
                     }
+
                 }
-
-
-
+                else
+                {
+                    Toast.makeText(sell.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
 
 
 
@@ -559,7 +578,8 @@ public class sell extends AppCompatActivity {
                         greSpinner.setVisibility(View.GONE);
                         branchSpinner.setVisibility(View.GONE);
                         yearSpinner.setVisibility(View.GONE);
-                        SubjectSpinner.setVisibility(View.GONE);
+                        SubjectSpinner.setVisibility(View.VISIBLE);
+                        gotoAdapter();
 
                     }
                     break;
@@ -567,10 +587,10 @@ public class sell extends AppCompatActivity {
                     case "GRE" :
                     {
 
-                        greSpinner.setVisibility(View.VISIBLE);
                         branchSpinner.setVisibility(View.GONE);
                         yearSpinner.setVisibility(View.GONE);
-                        SubjectSpinner.setVisibility(View.GONE);
+                        SubjectSpinner.setVisibility(View.VISIBLE);
+                        gotoAdapter();
 
                     }
                     break;
@@ -581,6 +601,7 @@ public class sell extends AppCompatActivity {
                         branchSpinner.setVisibility(View.VISIBLE);
                         yearSpinner.setVisibility(View.GONE);
                         SubjectSpinner.setVisibility(View.GONE);
+                        gotoAdapter();
 
 
                     }
@@ -612,42 +633,149 @@ public class sell extends AppCompatActivity {
     private void gotoAdapter() {
 
 
+        switch (category)
+        {
+
+            case "Btech" :
+            {
 
 
-        db.collection("Btech").document(Branch).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                if (task.isSuccessful())
+                if (Branch.equals("First Year"))
                 {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists())
-                    {
-                        subjectList= (ArrayList<String>)document.get(Year);
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item ,subjectList);
-                                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                SubjectSpinner.setAdapter(subjectAdapter);
 
 
 
+                    db.collection("Btech").document("First Year").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                            if (task.isSuccessful())
+                            {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists())
+                                {
+                                    subjectList= (ArrayList<String>)document.get("First Year");
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item ,subjectList);
+                                            subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                            SubjectSpinner.setAdapter(subjectAdapter);
+
+
+
+                                        }
+                                    },300);
+
+
+                                }
                             }
-                        },300);
 
 
-                    }
+
+
+
+                        }
+                    });
+
+
+
+
+
+
+
                 }
+                else
+                {
+
+
+                    db.collection("Btech").document(Branch).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                            if (task.isSuccessful())
+                            {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists())
+                                {
+                                    subjectList= (ArrayList<String>)document.get(Year);
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item ,subjectList);
+                                            subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                            SubjectSpinner.setAdapter(subjectAdapter);
+
+
+
+                                        }
+                                    },300);
+
+
+                                }
+                            }
+
+
+
+
+
+                        }
+                    });
+
+
+
+
+
+
+
+                }
+
+            }
+            break;
+
+
+            case "GMAT" :
+            {
+
+                subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item ,gmatList);
+                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                SubjectSpinner.setAdapter(subjectAdapter);
+
+
+            }
+            break;
+
+
+
+
+            case "GRE":
+            {
+                subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item ,greList);
+                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                SubjectSpinner.setAdapter(subjectAdapter);
+            }
+            break;
+
+
+            case "Gate" :
+            {
+
+                List<String> gatelist = new ArrayList<>();
+                gatelist.addAll(subjectList);
+                gatelist.remove("First Year");
+                subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item , gatelist);
+                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                SubjectSpinner.setAdapter(subjectAdapter);
 
 
 
 
 
             }
-        });
 
 
 
@@ -658,6 +786,7 @@ public class sell extends AppCompatActivity {
 
 
 
+        }
 
 
     }
@@ -736,4 +865,32 @@ public class sell extends AppCompatActivity {
 
 
     }
+
+
+
+
+    public  boolean isInternetConnection()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return  true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -87,7 +87,6 @@ public class otpcode extends AppCompatActivity {
     protected void onPause() {
 
 
-        Toast.makeText(this, "Do You Really Want  To Quit", Toast.LENGTH_SHORT).show();
         super.onPause();
 
     }

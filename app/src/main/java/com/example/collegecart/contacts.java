@@ -43,6 +43,8 @@ public class contacts extends AppCompatActivity {
     private ImageView favorites;
     private TextView addItems;
     private ImageView searchItems;
+    private ImageView sharebutton;
+    private ImageView deleteProducts;
 
     @SuppressLint("ResourceType")
     @Override
@@ -63,6 +65,8 @@ public class contacts extends AppCompatActivity {
         title = view.findViewById(R.id.ti);
         numberText = findViewById(R.id.numbertext);
         emailText = findViewById(R.id.emailText);
+        sharebutton = view.findViewById(R.id.shareButton);
+        sharebutton.setVisibility(View.GONE);
 
         getDatabase = FirebaseFirestore.getInstance();
         mobile = findViewById(R.id.mobileradio);
@@ -77,6 +81,8 @@ public class contacts extends AppCompatActivity {
 
 
 
+        deleteProducts = view.findViewById(R.id.deleteProducts);
+        deleteProducts.setVisibility(View.GONE);
 
 
 
@@ -159,6 +165,7 @@ public class contacts extends AppCompatActivity {
 
                 numberText.setText(numberText.getText().toString());
                 emailText.setText(emailText.getText().toString());
+                Toast.makeText(contacts.this, "Contact Info Saved", Toast.LENGTH_SHORT).show();
 
 
 

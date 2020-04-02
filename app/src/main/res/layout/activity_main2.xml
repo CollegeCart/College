@@ -9,6 +9,10 @@
     tools:context=".Main2Activity">
 
 
+
+
+
+
     <Spinner
         android:id="@+id/Buycategories"
         android:layout_width="250dp"

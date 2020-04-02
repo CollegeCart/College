@@ -49,7 +49,7 @@
 
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.893"
         app:layout_constraintStart_toEndOf="@+id/ti"
         app:layout_constraintTop_toTopOf="@+id/addItemToolbar"
         app:srcCompat="@mipmap/search"
@@ -64,7 +64,7 @@
 
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.993"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/ti"
         app:layout_constraintTop_toTopOf="@+id/addItemToolbar"
         app:srcCompat="@mipmap/delete"
@@ -100,7 +100,7 @@
         android:src="@mipmap/share"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/searchProducts"
-        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintHorizontal_bias="0.911"
         app:layout_constraintStart_toEndOf="@+id/ti"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,6 +118,8 @@
 
 
         app:srcCompat="@mipmap/save" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

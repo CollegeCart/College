@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     String countryC , phoneNumber;
     TextView error;
     FirebaseAuth auth;
+    SpinKitView spinKitView;
+    Button generateotp;
     FirebaseUser user;
     private  PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
 
@@ -45,9 +48,12 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         countryCode = findViewById(R.id.countryCode);
         phoneNUm  =findViewById(R.id.phonenumber);
+        generateotp = findViewById(R.id.LoginId);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        spinKitView = findViewById(R.id.generateSpin);
         error = findViewById(R.id.errrortext);
+        spinKitView.setVisibility(View.GONE);
 
         callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
@@ -71,12 +77,13 @@ public class MainActivity extends AppCompatActivity {
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(s, forceResendingToken);
 
+                spinKitView.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Code Sent", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this , otpcode.class);
                 intent.putExtra("AuthCredential" , s);
                 startActivity(intent);
 
-finish();
+                finish();
             }
         };
 
@@ -89,7 +96,7 @@ finish();
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        moveTaskToBack(true);
     }
 
     @Override
@@ -122,8 +129,14 @@ finish();
         }
         else {
 
-                if(isInternetConnection())
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(fullNo , 60 , TimeUnit.SECONDS , this,callbacks );
+
+            spinKitView.setVisibility(View.VISIBLE);
+                if(isInternetConnection()) {
+                    generateotp.setEnabled(false);
+                    generateotp.setAlpha(.8f);
+                    spinKitView.setVisibility(View.VISIBLE);
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(fullNo, 60, TimeUnit.SECONDS, this, callbacks);
+                }
                 else
                     Toast.makeText(this, "No  Internet Connection", Toast.LENGTH_SHORT).show();
 
@@ -181,4 +194,10 @@ finish();
                     }
                 });
     }
+
+
+
+
+
+
 }

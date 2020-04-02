@@ -2,12 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/loginContainer"
     android:background="@drawable/backk"
     tools:context=".MainActivity">
 
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/generateSpin"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="56dp"
+        android:layout_height="61dp"
+        android:layout_gravity="center"
+
+        app:SpinKit_Color="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/LoginId"
+        app:layout_constraintEnd_toEndOf="@+id/LoginId"
+        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintStart_toStartOf="@+id/LoginId"
+        app:layout_constraintTop_toTopOf="@+id/LoginId"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,9 +85,9 @@
 
         android:layout_marginTop="48dp"
         android:background="@drawable/button_back"
+        android:onClick="otp"
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
-        android:onClick="otp"
         android:text="Generate OTP"
         android:textAllCaps="false"
         android:textColor="#ffffff"
@@ -87,9 +102,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="skip"
         android:text="Skip"
         android:textColor="#000000"
-        android:onClick="skip"
 
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

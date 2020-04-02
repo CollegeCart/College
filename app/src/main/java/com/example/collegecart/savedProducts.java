@@ -119,56 +119,22 @@ public class savedProducts extends AppCompatActivity {
 
                 holder.subject.setText(model.getSubject());
                 holder.year.setText(model.getYear());
-                holder.branch.setText(model.getBranch());
-                holder.price.setText(model.getPrice());
-                holder.Category = model.getCategory();
-                holder.url = model.getImgUrl();
-                holder.userame = model.getUsername();
 
+                holder.url = model.getImgUrl();
                 holder.time = model.getTimestamp();
+                holder.branch.setText(model.getBranch() +" (" + model.getCategory() + ")");
+
+                holder.userame = model.getUsername();
+                holder.Category = model.getCategory();
                 holder.productname.setText(model.getProductname());
 
-
-                switch (holder.Category)
-                {
-                    case "Gate":
-                    {
-                        holder.year.setVisibility(View.GONE);
-                        holder.subject.setVisibility(View.GONE);
-                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-                    }
-                    break;
-                    case "Btech":
-                    {
-
-                        holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-
-                    }
-                    break;
-                    case "GRE":
-                    {
-                        holder.subject.setVisibility(View.GONE);
-                        holder.year.setVisibility(View.GONE);
-                        holder.branch.setText(model.getBranch());
-                    }
-                    break;
-
-                    case "GMAT":
-                    {
-                        holder.year.setVisibility(View.GONE);
-                        holder.branch.setVisibility(View.GONE);
-                        holder.subject.setVisibility(View.GONE);
-
-                    }
-                    break;
-
-
-                }
-
-
-
                 holder.userID = model.getUserID();
+
+
+                holder.price.setText(model.getPrice());
                 Glide.with(savedProducts.this).load(model.getImgUrl()).into(holder.image);
+
+
 
 
 

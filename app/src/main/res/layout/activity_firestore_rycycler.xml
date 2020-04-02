@@ -11,10 +11,11 @@
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/firespin"
-        style="@style/SpinKitView.Large.DoubleBounce"
+        style="@style/SpinKitView.Large.Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+
         app:SpinKit_Color="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +25,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ryclerId"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

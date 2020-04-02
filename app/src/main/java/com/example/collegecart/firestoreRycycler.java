@@ -49,6 +49,7 @@ public class firestoreRycycler extends AppCompatActivity {
     private FirebaseUser user;
     String gender;
     String profileurl;
+    ImageView college;
 
     SpinKitView  spinKitView;
     ImageView sharebutton;
@@ -184,17 +185,6 @@ public class firestoreRycycler extends AppCompatActivity {
        },1000);
 
 
-
-       new Handler().postDelayed(new Runnable() {
-           @Override
-           public void run() {
-
-
-
-
-           }
-       },2000);
-
       }
 
       if (isInternetConnection())
@@ -228,52 +218,13 @@ public class firestoreRycycler extends AppCompatActivity {
 
                   holder.url = model.getImgUrl();
                   holder.time = model.getTimestamp();
-                  holder.branch.setText(model.getBranch() + model.getCategory());
+                  holder.branch.setText(model.getBranch() +" (" + model.getCategory() + ")");
 
                   holder.userame = model.getUsername();
                   holder.Category = model.getCategory();
                   holder.productname.setText(model.getProductname());
 
                   holder.userID = model.getUserID();
-
-                  switch (holder.Category)
-                  {
-                      case "Gate":
-                      {
-                          holder.year.setVisibility(View.GONE);
-                          holder.subject.setVisibility(View.GONE);
-                          holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-                      }
-                      break;
-                      case "Btech":
-                      {
-
-                          holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-                          holder.subject.setText(model.getSubject());
-                          holder.year.setText(model.getYear());
-
-                      }
-                      break;
-                      case "GRE":
-                      {
-                          holder.subject.setVisibility(View.GONE);
-                          holder.year.setVisibility(View.GONE);
-                          holder.branch.setText(model.getBranch());
-                      }
-                      break;
-
-                      case "GMAT":
-                      {
-                          holder.year.setVisibility(View.GONE);
-                          holder.branch.setVisibility(View.GONE);
-                          holder.subject.setVisibility(View.GONE);
-
-                      }
-                      break;
-
-
-                  }
-
 
 
                   holder.price.setText(model.getPrice());
@@ -414,7 +365,21 @@ public class firestoreRycycler extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(user != null)
+        {
+            finish();
+        }
+        else
+        {
+            onBackPressed();
+        }
 
 
 
+
+    }
 }

@@ -110,7 +110,7 @@ FirebaseAuth auth;
             @Override
             public void run() {
 
-                if (urrl !=null)
+                if (urrl != null)
                 {
 
                     Intent intent = new Intent(profile.this , firestoreRycycler.class);
@@ -123,7 +123,7 @@ FirebaseAuth auth;
                 }
 
             }
-        },2000);
+        },1000);
 
 
 
@@ -133,16 +133,18 @@ FirebaseAuth auth;
     public void onFinsh(View view) {
 
 
-        spinKitView.setVisibility(View.VISIBLE);
 
-        layout.setVisibility(View.GONE);
-        if (email.getText().toString().isEmpty() || number.getText().toString().isEmpty() || username.getText().toString().isEmpty())
+
+
+        if (email.getText().toString().isEmpty() || number.getText().toString().isEmpty() || username.getText().toString().isEmpty() || !(male.isChecked() || female.isChecked()))
         {
             Toast.makeText(this, "All Field Is Required", Toast.LENGTH_SHORT).show();
+
         }
         else {
 
-
+            spinKitView.setVisibility(View.VISIBLE);
+            layout.setVisibility(View.GONE);
             saveTofireBase();
 
             new Handler().postDelayed(new Runnable() {

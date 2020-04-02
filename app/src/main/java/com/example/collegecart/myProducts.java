@@ -134,56 +134,21 @@ public class myProducts extends AppCompatActivity {
 
                     holder.subject.setText(model.getSubject());
                     holder.year.setText(model.getYear());
-                    holder.branch.setText(model.getBranch() + "(Btech)");
+
                     holder.url = model.getImgUrl();
                     holder.time = model.getTimestamp();
+                    holder.branch.setText(model.getBranch() +" (" + model.getCategory() + ")");
+
                     holder.userame = model.getUsername();
                     holder.Category = model.getCategory();
+                    holder.productname.setText(model.getProductname());
 
                     holder.userID = model.getUserID();
-                    holder.productname.setText(model.getProductname());
+
+
                     holder.price.setText(model.getPrice());
-                    switch (holder.Category)
-                    {
-                        case "Gate":
-                        {
-                            holder.year.setVisibility(View.GONE);
-                            holder.subject.setVisibility(View.GONE);
-                            holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-                        }
-                        break;
-                        case "Btech":
-                        {
-
-                            holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-
-                        }
-                        break;
-                        case "GRE":
-                        {
-                            holder.subject.setVisibility(View.GONE);
-                            holder.year.setVisibility(View.GONE);
-                            holder.branch.setText(model.getBranch());
-                        }
-                        break;
-
-                        case "GMAT":
-                        {
-                            holder.year.setVisibility(View.GONE);
-                            holder.branch.setVisibility(View.GONE);
-                            holder.subject.setVisibility(View.GONE);
-
-                        }
-                        break;
-
-
-                    }
-
-
-
-
-
                     Glide.with(myProducts.this).load(model.getImgUrl()).into(holder.image);
+
 
 
 

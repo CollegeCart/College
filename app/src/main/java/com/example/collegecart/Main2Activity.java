@@ -36,7 +36,6 @@ public class Main2Activity extends AppCompatActivity {
 
 
     Spinner buyspinnercategories;
-    ProgressDialog BuyprogressDialog;
     FirebaseFirestore database;
     FirebaseAuth auth;
     private TextView title;
@@ -47,10 +46,12 @@ public class Main2Activity extends AppCompatActivity {
     TextView additem;
     ArrayAdapter subjectAdapter , branchAdapter , yearAdapter;
     Spinner BuybranchSpinner , BuyyearSpinner , BuySubjectSpinner , BuygreSpinner;
+    String greList[] = {"AWA(Analytical Writing)" , "Quantitative Reasoning" , "Verbal Reasoning" , "Physics" , "Chemistry" , "Mathematics" , "Literature In English" , "Biology" , "Psychology"};
+    String gmatList[] = {"AWA(Analytical Writing)" , "Quantitative" , "Verbal" , "Integrated Reasoning"};
     List<String> BuybranchList , BuysubjectList;
 
     String[]  BuyCategories = {"Select Categories" ,"GMAT" , "Btech" , "GRE" , "Gate" };
-    String[]  BuyYearList = {"Second Year" , "Third Year" , "Fourth Year"};
+    String[]  BuyYearList = {"Second Year" , "Third Year" , "Fourth Year", "Accesories"};
     CircleImageView imageView;
      String category;
      String BuyBranch;
@@ -107,9 +108,7 @@ public class Main2Activity extends AppCompatActivity {
 
         BuybranchList = new ArrayList<>();
         BuysubjectList = new ArrayList<>();
-        BuyprogressDialog = new ProgressDialog(this);
-        BuyprogressDialog.setMessage("Loading.......");
-        BuyprogressDialog.show();
+
 
 
 
@@ -218,7 +217,6 @@ public class Main2Activity extends AppCompatActivity {
             public void run() {
 
 
-                BuyprogressDialog.dismiss();
                 buyspinnercategories.setVisibility(View.VISIBLE);
 
             }
@@ -261,7 +259,8 @@ public class Main2Activity extends AppCompatActivity {
                         BuygreSpinner.setVisibility(View.GONE);
                         BuybranchSpinner.setVisibility(View.GONE);
                         BuyyearSpinner.setVisibility(View.GONE);
-                        BuySubjectSpinner.setVisibility(View.GONE);
+                        BuySubjectSpinner.setVisibility(View.VISIBLE);
+                        gotoAdapter();
 
 
 
@@ -271,10 +270,11 @@ public class Main2Activity extends AppCompatActivity {
                     case "GRE" :
                     {
 
-                        BuygreSpinner.setVisibility(View.VISIBLE);
+                        BuygreSpinner.setVisibility(View.GONE);
                         BuybranchSpinner.setVisibility(View.GONE);
                         BuyyearSpinner.setVisibility(View.GONE);
-                        BuySubjectSpinner.setVisibility(View.GONE);
+                        BuySubjectSpinner.setVisibility(View.VISIBLE);
+                        gotoAdapter();
 
 
                     }
@@ -370,43 +370,160 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-        database.collection("Btech").document(BuyBranch).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+        switch (category)
+        {
 
-                if (task.isSuccessful())
+            case "Btech" :
+            {
+
+
+                if (BuyBranch.equals("First Year"))
                 {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists())
-                    {
-                        BuysubjectList= (ArrayList<String>)document.get(BuyYear);
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,BuysubjectList);
-                                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                BuySubjectSpinner.setAdapter(subjectAdapter);
 
 
 
+                    database.collection("Btech").document("First Year").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                            if (task.isSuccessful())
+                            {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists())
+                                {
+                                    BuysubjectList= (ArrayList<String>)document.get("First Year");
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,BuysubjectList);
+                                            subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                            BuySubjectSpinner.setAdapter(subjectAdapter);
+
+
+
+                                        }
+                                    },300);
+
+
+                                }
                             }
-                        },300);
 
 
-                    }
+
+
+
+                        }
+                    });
+
+
+
+
+
+
+
                 }
+                else
+                {
+
+
+                    database.collection("Btech").document(BuyBranch).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                            if (task.isSuccessful())
+                            {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists())
+                                {
+                                    BuysubjectList= (ArrayList<String>)document.get(BuyYear);
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,BuysubjectList);
+                                            subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                            BuySubjectSpinner.setAdapter(subjectAdapter);
+
+
+
+                                        }
+                                    },300);
+
+
+                                }
+                            }
+
+
+
+
+
+                        }
+                    });
+
+
+
+
+
+
+
+                }
+
+            }
+            break;
+
+
+            case "GMAT" :
+            {
+
+                subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,gmatList);
+                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                BuySubjectSpinner.setAdapter(subjectAdapter);
+
+
+            }
+            break;
+
+
+
+
+            case "GRE":
+            {
+                subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item ,greList);
+                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                BuySubjectSpinner.setAdapter(subjectAdapter);
+            }
+            break;
+
+
+            case "Gate" :
+            {
+
+                List<String> gatelist = new ArrayList<>();
+                gatelist.addAll(BuysubjectList);
+                gatelist.remove("First Year");
+                subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item , gatelist);
+                subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                BuySubjectSpinner.setAdapter(subjectAdapter);
 
 
 
 
 
             }
-        });
 
 
 
+
+
+
+
+
+
+
+        }
 
 
 

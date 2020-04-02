@@ -171,42 +171,6 @@ public class searchResults extends AppCompatActivity {
                             holder.userame = model.getUsername();
                             holder.userID = model.getUserID();
 
-                            switch (holder.Category)
-                            {
-                                case "Gate":
-                                {
-                                    holder.year.setVisibility(View.GONE);
-                                    holder.subject.setVisibility(View.GONE);
-                                    holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-                                }
-                                break;
-                                case "Btech":
-                                {
-
-                                    holder.branch.setText(model.getBranch() + " (" + model.getCategory() + ")");
-
-                                }
-                                break;
-                                case "GRE":
-                                {
-                                    holder.subject.setVisibility(View.GONE);
-                                    holder.year.setVisibility(View.GONE);
-                                    holder.branch.setText(model.getBranch());
-                                }
-                                break;
-
-                                case "GMAT":
-                                {
-                                    holder.year.setVisibility(View.GONE);
-                                    holder.branch.setVisibility(View.GONE);
-                                    holder.subject.setVisibility(View.GONE);
-
-                                }
-                                break;
-
-
-                            }
-
 
 
                             Glide.with(searchResults.this).load(model.getImgUrl()).into(holder.image);

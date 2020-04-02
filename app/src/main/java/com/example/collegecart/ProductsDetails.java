@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,6 +42,7 @@ public class ProductsDetails extends AppCompatActivity {
     TextView yearDetails;
     TextView brachDetails;
     FirebaseFirestore firestore;
+    SpinKitView spinKitView;
     TextView subjectDetails;
     ImageView imageDEtails;
     TextView sellerCOntact;
@@ -87,6 +89,10 @@ public class ProductsDetails extends AppCompatActivity {
         });
 
 
+
+
+        spinKitView = findViewById(R.id.detailsSpin);
+        spinKitView.setVisibility(View.VISIBLE);
         title = view.findViewById(R.id.ti);
         notlogintetxt = findViewById(R.id.notloginText);
         deleteProducts = view.findViewById(R.id.deleteProducts);
@@ -130,6 +136,68 @@ public class ProductsDetails extends AppCompatActivity {
         brachDetails.setText(intent.getStringExtra("Branch"));
         pricedetails.setText(intent.getStringExtra("Price"));
         productName.setText(intent.getStringExtra("productname"));
+
+
+        subjectDetails.setVisibility(View.GONE);
+        yearDetails.setVisibility(View.GONE);
+        brachDetails.setVisibility(View.GONE);
+        pricedetails.setVisibility(View.GONE);
+        productName.setVisibility(View.GONE);
+        sellerName.setVisibility(View.GONE);
+        sellerCOntact.setVisibility(View.GONE);
+        imageDEtails.setVisibility(View.GONE);
+
+
+
+
+
+        if (user == null)
+        {
+            sharebutton.setVisibility(View.GONE);
+            favorites.setVisibility(View.GONE);
+
+        }
+
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                spinKitView.setVisibility(View.GONE);
+
+
+                subjectDetails.setVisibility(View.VISIBLE);
+                yearDetails.setVisibility(View.VISIBLE);
+                brachDetails.setVisibility(View.VISIBLE);
+                pricedetails.setVisibility(View.VISIBLE);
+                productName.setVisibility(View.VISIBLE);
+
+                imageDEtails.setVisibility(View.VISIBLE);
+                if (user != null)
+                {
+                    sellerName.setVisibility(View.VISIBLE);
+                    sellerCOntact.setVisibility(View.VISIBLE);
+
+                }
+                else {
+
+                    button.setVisibility(View.VISIBLE);
+                    notlogintetxt.setVisibility(View.VISIBLE);
+                    sharebutton.setVisibility(View.GONE);
+                    favorites.setVisibility(View.GONE);
+
+
+                }
+
+
+
+
+
+
+
+            }
+        } , 1000);
 
 
 
@@ -291,7 +359,7 @@ public class ProductsDetails extends AppCompatActivity {
 
                 brachDetails.setVisibility(View.GONE);
                 yearDetails.setText(intent.getStringExtra("category"));
-                subjectDetails.setVisibility(View.GONE);
+                subjectDetails.setVisibility(View.VISIBLE);
 
 
             }
@@ -300,7 +368,7 @@ public class ProductsDetails extends AppCompatActivity {
             {
                 yearDetails.setVisibility(View.GONE); brachDetails.setVisibility(View.GONE);
                 brachDetails.setVisibility(View.GONE);
-                subjectDetails.setVisibility(View.GONE);
+                subjectDetails.setVisibility(View.VISIBLE);
 
             }
             break;
@@ -357,19 +425,6 @@ public class ProductsDetails extends AppCompatActivity {
         });
 
 
-
-
-
-        if (user == null)
-        {
-            button.setVisibility(View.VISIBLE);
-            favorites.setVisibility(View.GONE);
-            notlogintetxt.setVisibility(View.VISIBLE);
-            sellerName.setVisibility(View.GONE);
-            sellerCOntact.setVisibility(View.GONE);
-
-
-        }
 
 
 
