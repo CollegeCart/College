@@ -12,17 +12,18 @@
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/generateSpin"
         style="@style/SpinKitView.Large.Circle"
-        android:layout_width="56dp"
-        android:layout_height="61dp"
+        android:layout_width="40dp"
+        android:layout_marginTop="2dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
 
         app:SpinKit_Color="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/LoginId"
         app:layout_constraintEnd_toEndOf="@+id/LoginId"
-        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="@+id/LoginId"
         app:layout_constraintTop_toTopOf="@+id/LoginId"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,6 +79,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.253" />
 
+
     <Button
         android:id="@+id/LoginId"
         android:layout_width="wrap_content"
@@ -97,7 +99,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phonenumber" />
-
 
     <TextView
         android:layout_width="wrap_content"

@@ -243,9 +243,20 @@ public class Main2Activity extends AppCompatActivity {
                 {
                     case "Btech":
                     {
+                        if (BuyBranch.equals("First Year"))
+                        {
+
+                            BuyyearSpinner.setVisibility(View.GONE);
+
+
+                        }
+                        else
+                        {
+                            BuyyearSpinner.setVisibility(View.VISIBLE);
+
+                        }
                         BuygreSpinner.setVisibility(View.GONE);
                         BuybranchSpinner.setVisibility(View.VISIBLE);
-                        BuyyearSpinner.setVisibility(View.VISIBLE);
                         BuySubjectSpinner.setVisibility(View.VISIBLE);
 
 
@@ -259,7 +270,7 @@ public class Main2Activity extends AppCompatActivity {
                         BuygreSpinner.setVisibility(View.GONE);
                         BuybranchSpinner.setVisibility(View.GONE);
                         BuyyearSpinner.setVisibility(View.GONE);
-                        BuySubjectSpinner.setVisibility(View.VISIBLE);
+                        BuySubjectSpinner.setVisibility(View.GONE);
                         gotoAdapter();
 
 
@@ -273,7 +284,7 @@ public class Main2Activity extends AppCompatActivity {
                         BuygreSpinner.setVisibility(View.GONE);
                         BuybranchSpinner.setVisibility(View.GONE);
                         BuyyearSpinner.setVisibility(View.GONE);
-                        BuySubjectSpinner.setVisibility(View.VISIBLE);
+                        BuySubjectSpinner.setVisibility(View.GONE);
                         gotoAdapter();
 
 
@@ -382,6 +393,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
+                    BuyyearSpinner.setVisibility(View.GONE);
                     database.collection("Btech").document("First Year").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -428,6 +440,7 @@ public class Main2Activity extends AppCompatActivity {
                 {
 
 
+                    BuyyearSpinner.setVisibility(View.VISIBLE);
                     database.collection("Btech").document(BuyBranch).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -501,10 +514,8 @@ public class Main2Activity extends AppCompatActivity {
             case "Gate" :
             {
 
-                List<String> gatelist = new ArrayList<>();
-                gatelist.addAll(BuysubjectList);
-                gatelist.remove("First Year");
-                subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item , gatelist);
+
+                subjectAdapter= new ArrayAdapter(Main2Activity.this ,  android.R.layout.simple_spinner_item , BuysubjectList);
                 subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 BuySubjectSpinner.setAdapter(subjectAdapter);
 

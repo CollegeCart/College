@@ -69,7 +69,9 @@ public class sell extends AppCompatActivity {
     String Branch , Year , Subject;
     Button updateButton;
         SpinKitView spinKitView;
+        ArrayList<String> gatelist;
     ArrayAdapter subjectAdapter , branchAdapter , yearAdapter;
+    SpinKitView imagespin;
     List<String> branchList , subjectList;
     String downloadURL;
     String Price;
@@ -138,7 +140,10 @@ public class sell extends AppCompatActivity {
         searchProducts = findViewById(R.id.searchProducts);
         searchProducts.setVisibility(View.GONE);
 
+        gatelist  = new ArrayList<>();
 
+        imagespin = findViewById(R.id.profileimageSpin);
+        imagespin.setVisibility(View.GONE);
 
 
 
@@ -163,6 +168,7 @@ public class sell extends AppCompatActivity {
         SubjectSpinner = findViewById(R.id.subjectspin);
         spinnercategories  = findViewById(R.id.categories);
         branchList = new ArrayList<>();
+
         spinnercategories.setVisibility(View.GONE);
         subjectList = new ArrayList<>();
         pname = findViewById(R.id.productNmae);
@@ -212,6 +218,11 @@ public class sell extends AppCompatActivity {
         },2000);
 
 
+
+//--------------------------------Gate List---------------------------------------------------
+
+
+
         updateButton.setAlpha(.5f);
         updateButton.setEnabled(false);
             updateButton.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +232,7 @@ public class sell extends AppCompatActivity {
 
                 if (isInternetConnection())
                 {
-                    if (imageView !=  null)
+                    if (downloadURL !=null)
                     {
 
                         greSpinner.setVisibility(View.GONE);
@@ -248,39 +259,93 @@ public class sell extends AppCompatActivity {
                         {
                             case "Btech" : {
 
+                                if(Branch.equals("First Year"))
+                                {
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            Price = " Rs " + price.getText().toString();
+
+
+                                            final ProductsModel product;
+
+                                            product = new ProductsModel(pname.getText().toString() , Branch, Subject, "", category, downloadURL, Price, userid, username , timestamp);
 
 
 
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
 
-
-
-
-
-
-
-                                        Price = " Rs " + price.getText().toString();
-
-                                        final ProductsModel product = new ProductsModel(pname.getText().toString() , Branch, Subject, Year, category, downloadURL, Price, userid, username , timestamp);
-
-
-                                        db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
-                                                new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        spinKitView.setVisibility(View.GONE);
-                                                        Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(sell.this , myProducts.class);
-                                                        startActivity(intent);
-                                                        finish();
+                                            db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                                    new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            spinKitView.setVisibility(View.GONE);
+                                                            Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(sell.this , myProducts.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
                                                     }
-                                                }
-                                        );
+                                            );
 
-                                    }
-                                }, 1000);
+                                        }
+                                    }, 1000);
+
+
+
+
+
+
+
+
+
+
+                                }
+                                else
+                                {
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            Price = " Rs " + price.getText().toString();
+
+
+                                            final ProductsModel product;
+
+                                            product = new ProductsModel(pname.getText().toString() , Branch, Subject, Year, category, downloadURL, Price, userid, username , timestamp);
+
+
+
+
+                                            db.collection("Users").document(userid).collection("Products").document(timestamp).set(product).addOnSuccessListener(
+                                                    new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            spinKitView.setVisibility(View.GONE);
+                                                            Toast.makeText(sell.this, "Product Uploaded", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(sell.this , myProducts.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    }
+                                            );
+
+                                        }
+                                    }, 1000);
+
+
+
+
+
+
+
+                                }
+
+
+
+
 
 
                             }
@@ -564,9 +629,19 @@ public class sell extends AppCompatActivity {
                     case "Btech":
                     {
 
+
+                        if (Branch.equals("First Year"))
+                        {
+                            yearSpinner.setVisibility(View.GONE);
+
+                        }
+                        else
+                        {
+                            yearSpinner.setVisibility(View.VISIBLE);
+
+                        }
                         greSpinner.setVisibility(View.GONE);
                         branchSpinner.setVisibility(View.VISIBLE);
-                        yearSpinner.setVisibility(View.VISIBLE);
                         SubjectSpinner.setVisibility(View.VISIBLE);
 
 
@@ -644,6 +719,7 @@ public class sell extends AppCompatActivity {
                 {
 
 
+                    yearSpinner.setVisibility(View.GONE);
 
                     db.collection("Btech").document("First Year").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -690,6 +766,7 @@ public class sell extends AppCompatActivity {
                 else
                 {
 
+                    yearSpinner.setVisibility(View.VISIBLE);
 
                     db.collection("Btech").document(Branch).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -764,16 +841,10 @@ public class sell extends AppCompatActivity {
             case "Gate" :
             {
 
-                List<String> gatelist = new ArrayList<>();
-                gatelist.addAll(subjectList);
-                gatelist.remove("First Year");
-                subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item , gatelist);
+
+                subjectAdapter= new ArrayAdapter(sell.this ,  android.R.layout.simple_spinner_item ,subjectList);
                 subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 SubjectSpinner.setAdapter(subjectAdapter);
-
-
-
-
 
             }
 
@@ -804,7 +875,8 @@ public class sell extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , uriimage);
 
                 profileimage.setImageBitmap(bitmap);
-
+                imagespin.setVisibility(View.VISIBLE);
+profileimage.setAlpha(0.7f);
                 uploadTofirestore();
 
 
@@ -836,6 +908,8 @@ public class sell extends AppCompatActivity {
 
                             Uri downloadURI = uri;
                             downloadURL = downloadURI.toString();
+                            profileimage.setAlpha(1.0f);
+                            imagespin.setVisibility(View.GONE);
 
 
 

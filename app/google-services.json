@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "1084609995376",
+    "firebase_url": "https://collegecart-7b8fd.firebaseio.com",
+    "project_id": "collegecart-7b8fd",
+    "storage_bucket": "collegecart-7b8fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084609995376:android:a56bbb5e2b258fcd470ab5",
+        "android_client_info": {
+          "package_name": "com.example.collegecart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084609995376-c3rhef21dscfk6pekvnpsomef06r9q22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.collegecart",
+            "certificate_hash": "cd008de05fcb2f2761359b250faba4b9821198d2"
+          }
+        },
+        {
+          "client_id": "1084609995376-2mrrste9kd2p8rp98iijnhbf2bev979g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.collegecart",
+            "certificate_hash": "82e58bfd27a2fcff4e79a8ccaa7315c582274c71"
+          }
+        },
+        {
+          "client_id": "1084609995376-c6ni6f3hu817ve6odasgu6smru83qjrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-AbdkQv6xRjqd4zxwFdRF9gEtWFXrHAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084609995376-c6ni6f3hu817ve6odasgu6smru83qjrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -105,6 +105,7 @@ public class ProductsDetails extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT , "Hello PLz Have A Look At This App");
+                intent.putExtra(Intent.EXTRA_TEXT , "https://play.google.com/store/apps/details?id=" +BuildConfig.APPLICATION_ID +"\n\n");
                 startActivity(Intent.createChooser(intent , "Share Using"));
             }
         });
@@ -160,6 +161,8 @@ public class ProductsDetails extends AppCompatActivity {
 
 
 
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -184,8 +187,7 @@ public class ProductsDetails extends AppCompatActivity {
 
                     button.setVisibility(View.VISIBLE);
                     notlogintetxt.setVisibility(View.VISIBLE);
-                    sharebutton.setVisibility(View.GONE);
-                    favorites.setVisibility(View.GONE);
+
 
 
                 }
@@ -233,7 +235,7 @@ public class ProductsDetails extends AppCompatActivity {
                 }
 
             }
-        },300);
+        },100);
 
 
 
@@ -341,6 +343,7 @@ public class ProductsDetails extends AppCompatActivity {
             case "Btech":
             {
 
+
             }
             break;
 
@@ -358,8 +361,7 @@ public class ProductsDetails extends AppCompatActivity {
             {
 
                 brachDetails.setVisibility(View.GONE);
-                yearDetails.setText(intent.getStringExtra("category"));
-                subjectDetails.setVisibility(View.VISIBLE);
+                yearDetails.setVisibility(View.GONE);
 
 
             }
@@ -368,7 +370,6 @@ public class ProductsDetails extends AppCompatActivity {
             {
                 yearDetails.setVisibility(View.GONE); brachDetails.setVisibility(View.GONE);
                 brachDetails.setVisibility(View.GONE);
-                subjectDetails.setVisibility(View.VISIBLE);
 
             }
             break;
@@ -402,16 +403,107 @@ public class ProductsDetails extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyymm-ss-hh");
-                String random = format.format(new Date());
-                ProductsModel product = new ProductsModel(productName.getText().toString(),brachDetails.getText().toString() , subjectDetails.getText().toString() , yearDetails.getText().toString() ,intent.getStringExtra("category") , uurl , pricedetails.getText().toString() , ID , othername , random);
-                firestore.collection("Users").document(user.getUid()).collection("Favorites").document(random).set(product);
+                switch(intent.getStringExtra("category"))
+                {
 
-                Toast.makeText(ProductsDetails.this, "Product Saved", Toast.LENGTH_SHORT).show();
+
+                    case "Btech":
+                    {
+
+                        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyymm-ss-hh");
+                        String random = format.format(new Date());
+                        ProductsModel product = new ProductsModel(productName.getText().toString(),brachDetails.getText().toString() , subjectDetails.getText().toString() , yearDetails.getText().toString() ,"" , uurl , pricedetails.getText().toString() , ID , othername , random);
+                        firestore.collection("Users").document(user.getUid()).collection("Favorites").document(random).set(product);
+
+                        Toast.makeText(ProductsDetails.this, "Product Saved", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+
+
+                    }
+                    break;
+
+                    case "Gate":
+                    {
+
+
+                        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyymm-ss-hh");
+                        String random = format.format(new Date());
+                        ProductsModel product = new ProductsModel(productName.getText().toString(),brachDetails.getText().toString() , "" , "","" , uurl , pricedetails.getText().toString() , ID , othername , random);
+                        firestore.collection("Users").document(user.getUid()).collection("Favorites").document(random).set(product);
+
+                        Toast.makeText(ProductsDetails.this, "Product Saved", Toast.LENGTH_SHORT).show();
+
+
+
+
+                    }
+                    break;
+                    case "GRE":
+                    {
+
+
+                        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyymm-ss-hh");
+                        String random = format.format(new Date());
+                        ProductsModel product = new ProductsModel(productName.getText().toString(),"", subjectDetails.getText().toString() , "" ,intent.getStringExtra("category") , uurl , pricedetails.getText().toString() , ID , othername , random);
+                        firestore.collection("Users").document(user.getUid()).collection("Favorites").document(random).set(product);
+
+                        Toast.makeText(ProductsDetails.this, "Product Saved", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+
+                    }
+                    break;
+                    case "GMAT":
+                    {
+
+                        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyymm-ss-hh");
+                        String random = format.format(new Date());
+                        ProductsModel product = new ProductsModel(productName.getText().toString(),"" , subjectDetails.getText().toString() , "" ,"GMAT", uurl , pricedetails.getText().toString() , ID , othername , random);
+                        firestore.collection("Users").document(user.getUid()).collection("Favorites").document(random).set(product);
+
+                        Toast.makeText(ProductsDetails.this, "Product Saved", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+                    }
+                    break;
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             }
         });
+
+
+
 
 
         imageDEtails.setOnClickListener(new View.OnClickListener() {
@@ -460,6 +552,28 @@ public class ProductsDetails extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+
+        if (intent.getStringExtra("from").equals("myproducts") )
+        {
+            Intent intent = new Intent(this , myProducts.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+
+
+        if (intent.getStringExtra("from").equals("saved") )
+        {
+            Intent intent = new Intent(this , savedProducts.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+
+
 
 
     }

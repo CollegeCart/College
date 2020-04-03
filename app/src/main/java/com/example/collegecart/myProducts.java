@@ -159,6 +159,7 @@ public class myProducts extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
             recyclerView.setHasFixedSize(true);
+            recyclerView.setItemViewCacheSize(20);
             recyclerView.setAdapter(adapter);
 
         }
@@ -215,7 +216,6 @@ public class myProducts extends AppCompatActivity {
                     intent.putExtra("from" , "myproducts");
 
                     startActivity(intent);
-
                     finish();
 
 

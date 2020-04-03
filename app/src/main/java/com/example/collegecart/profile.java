@@ -95,6 +95,7 @@ FirebaseAuth auth;
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 urrl = documentSnapshot.getString("Contact");
+                Toast.makeText(profile.this, urrl, Toast.LENGTH_SHORT).show();
 
 
 
@@ -123,7 +124,7 @@ FirebaseAuth auth;
                 }
 
             }
-        },1000);
+        },2000);
 
 
 

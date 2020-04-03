@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         else {
 
 
-            spinKitView.setVisibility(View.VISIBLE);
                 if(isInternetConnection()) {
                     generateotp.setEnabled(false);
                     generateotp.setAlpha(.8f);

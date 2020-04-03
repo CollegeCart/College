@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/home/ntomar/AndroidStudioProjects/College/collegeCart.jks')
+            storePassword 'collegenitish'
+            keyAlias = 'collegenitish'
+            keyPassword 'collegenitish'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -17,6 +25,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -34,6 +43,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'android.arch.paging:runtime:2.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'

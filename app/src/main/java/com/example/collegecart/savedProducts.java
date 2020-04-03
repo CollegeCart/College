@@ -122,7 +122,7 @@ public class savedProducts extends AppCompatActivity {
 
                 holder.url = model.getImgUrl();
                 holder.time = model.getTimestamp();
-                holder.branch.setText(model.getBranch() +" (" + model.getCategory() + ")");
+                holder.branch.setText(model.getBranch() + " " + model.getCategory());
 
                 holder.userame = model.getUsername();
                 holder.Category = model.getCategory();

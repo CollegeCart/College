@@ -3,6 +3,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.firebase.ui.firestore.paging.LoadingState;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +46,7 @@ public class firestoreRycycler extends AppCompatActivity {
  private   FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
 
-    FirestoreRecyclerAdapter adapter;
+    FirestorePagingAdapter adapter;
     FirebaseFirestore db;
     ImageView favorites;
     CircleImageView imageToolbar;
@@ -192,12 +196,16 @@ public class firestoreRycycler extends AppCompatActivity {
           query = firebaseFirestore.collectionGroup("Products");
 
 
+          PagedList.Config config = new PagedList.Config.Builder()
+                  .setPageSize(8)
+                  .setInitialLoadSizeHint(8)
+                  .build();
 
-          FirestoreRecyclerOptions<ProductsModel> options = new FirestoreRecyclerOptions.Builder<ProductsModel>()
-                  .setQuery(query , ProductsModel.class).build();
+          FirestorePagingOptions<ProductsModel> options = new FirestorePagingOptions.Builder<ProductsModel>()
+                  .setQuery(query ,config, ProductsModel.class).build();
 
 
-          adapter = new FirestoreRecyclerAdapter<ProductsModel, ProductsViewHolder>(options) {
+          adapter = new FirestorePagingAdapter<ProductsModel, ProductsViewHolder>(options) {
               @NonNull
               @Override
               public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -233,6 +241,8 @@ public class firestoreRycycler extends AppCompatActivity {
 
 
               }
+
+
           };
 
           recyclerView.setLayoutManager(new LinearLayoutManager(this));

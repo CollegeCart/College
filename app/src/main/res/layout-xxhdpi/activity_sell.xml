@@ -25,6 +25,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.392" />
 
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/profileimageSpin"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="49dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/red"
+        app:layout_constraintBottom_toBottomOf="@+id/productImagee"
+        app:layout_constraintEnd_toEndOf="@+id/productImagee"
+        app:layout_constraintStart_toStartOf="@+id/productImagee"
+        app:layout_constraintTop_toTopOf="@+id/productImagee" />
+
     <ImageView
         android:id="@+id/productImagee"
         android:layout_width="100dp"
@@ -116,6 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/edit_back"
+        android:inputType="number"
         android:hint="   Enter Price"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"

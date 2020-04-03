@@ -36,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:inputType="number"
             android:background="@drawable/edit_back"
             android:padding="10dp"
             android:layout_marginLeft="10dp"
