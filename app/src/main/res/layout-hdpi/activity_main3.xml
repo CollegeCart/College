@@ -7,22 +7,15 @@
     tools:context=".Main3Activity">
 
 
-
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleView"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="112dp"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent"
-
         tools:src="@android:drawable/ic_menu_camera" />
-
 
     <TextView
         android:id="@+id/textView"
@@ -30,13 +23,13 @@
         android:layout_height="wrap_content"
 
 
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="36dp"
         android:text="My Products"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleView" />
 
@@ -45,12 +38,12 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="40dp"
 
         android:layout_marginTop="16dp"
         android:text="Saved Products"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -61,12 +54,12 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
 
         android:text="Contact Info"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,11 +71,11 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
-        android:text="About Us"
+        android:text="Contact Us"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,12 +85,12 @@
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="72dp"
         android:background="@drawable/button_back"
-        android:text="Log0out"
+        android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 

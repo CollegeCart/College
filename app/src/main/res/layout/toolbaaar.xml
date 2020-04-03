@@ -29,17 +29,16 @@
         android:id="@+id/ti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="ToolBar"
         android:textColor="@color/white"
         android:textSize="17sp"
 
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageView
         android:id="@+id/searchProducts"
@@ -48,25 +47,26 @@
         android:layout_marginTop="4dp"
 
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.893"
+        app:layout_constraintHorizontal_bias="0.868"
         app:layout_constraintStart_toEndOf="@+id/ti"
-        app:layout_constraintTop_toTopOf="@+id/addItemToolbar"
-        app:srcCompat="@mipmap/search"
+        app:layout_constraintTop_toTopOf="parent"
 
-        />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@mipmap/search" />
 
     <ImageView
         android:id="@+id/deleteProducts"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="3dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="4dp"
 
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.848"
         app:layout_constraintStart_toEndOf="@+id/ti"
-        app:layout_constraintTop_toTopOf="@+id/addItemToolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/delete"
 
 
@@ -74,19 +74,14 @@
 
     <TextView
         android:id="@+id/addItemToolbar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
         android:layout_marginStart="80dp"
-        android:layout_marginBottom="8dp"
-        android:text="+"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-
-        app:layout_constraintBottom_toTopOf="@+id/searchProducts"
+        android:layout_marginTop="5dp"
+        android:background="@mipmap/additem"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintHorizontal_bias="0.675"
         app:layout_constraintStart_toEndOf="@+id/ti"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,16 +101,15 @@
 
     <ImageView
         android:id="@+id/SaveTofavorites"
-        android:layout_width="40dp"
+        android:layout_width="33dp"
 
-        android:layout_height="40dp"
+        android:layout_height="33dp"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.343"
         app:layout_constraintStart_toEndOf="@+id/shareButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@mipmap/save" />
 
 

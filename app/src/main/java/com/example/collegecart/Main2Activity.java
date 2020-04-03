@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -545,13 +546,18 @@ public class Main2Activity extends AppCompatActivity {
 
     public void productlist(View view) {
 
-        Intent intent = new Intent(this , searchResults.class);
-        intent.putExtra("category" , category);
-        intent.putExtra("Subject" , Subject);
-        intent.putExtra("branch" , BuyBranch);
-        startActivity(intent);
-        finish();
-
+        if (!category.equals("Select Categories")) {
+            Intent intent = new Intent(Main2Activity.this, searchResults.class);
+            intent.putExtra("category", category);
+            intent.putExtra("Subject", Subject);
+            intent.putExtra("branch", BuyBranch);
+            startActivity(intent);
+            finish();
+        }
+        else
+        {
+            Toast.makeText(this, "Invalid Search", Toast.LENGTH_SHORT).show();
+        }
 
     }
 }

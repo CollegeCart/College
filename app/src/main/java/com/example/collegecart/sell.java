@@ -232,7 +232,7 @@ public class sell extends AppCompatActivity {
 
                 if (isInternetConnection())
                 {
-                    if (downloadURL !=null)
+                    if (downloadURL !=null && !category.equals("Select Categories")  &&  !price.getText().toString().equals("") &&  !pname.getText().toString().equals(""))
                     {
 
                         greSpinner.setVisibility(View.GONE);
@@ -470,7 +470,7 @@ public class sell extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(sell.this, "Product Image Is Required", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(sell.this, "All Details Are Required", Toast.LENGTH_SHORT).show();
                     }
 
                 }
